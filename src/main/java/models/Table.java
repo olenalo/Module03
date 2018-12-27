@@ -1,6 +1,7 @@
 package models;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Table {
@@ -8,11 +9,6 @@ public class Table {
     private Long tableId;
     private Map<Location, String> table;
 
-    /**
-     * Initialize a default table.
-     * <p>
-     * Default table has 2 x 2 size filled with empty values.
-     */
     public Table() {
         this.table = new HashMap<>();
         this.initializeDefaultTable();
@@ -20,14 +16,46 @@ public class Table {
 
     public void initializeDefaultTable() {
         // TODO refactor with loops, using `SpreadsheetConfigs`
+        // TODO consider removing; this is GUI actually
         table.put(new Location((long) 0, (long) 0), "");
         table.put(new Location((long) 0, (long) 1), "");
         table.put(new Location((long) 1, (long) 0), "");
         table.put(new Location((long) 1, (long) 1), "");
     }
 
-    public void addData() {
-        // TODO implement
+    // TODO make it possible to add values of different types
+
+    /**
+     * Add a single value to a cell (datum).
+     *
+     * @param location
+     * @param value
+     */
+    public void addDatum(Location location, String value) {
+        // TODO check location (no data can be added to non-existing cell)
+        table.put(location, value);
+    }
+
+    /**
+     * Add data to multiple cells.
+     *
+     * @param from
+     * @param to
+     * @param values
+     */
+    public void addData(Location from, Location to, List<String> values) {
+        // TODO check location (no data can be added to non-existing cell)
+        // TODO fill in the table; non-existent values to become `null`?
+    }
+
+    /**
+     * Add data to multiple cells.
+     *
+     * @param table
+     */
+    public void addData(Map<Location, String> table) {
+        // TODO check location (no data can be added to non-existing cell)
+        // TODO fill in the table
     }
 
     // TODO implement the methods below; add methods with data
