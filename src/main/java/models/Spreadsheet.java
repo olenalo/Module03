@@ -6,9 +6,13 @@ import java.util.Map;
 
 public class Spreadsheet {
 
-    private Map<String, Location> table;
+    private Map<Integer, Entry> table;
 
     public Spreadsheet() {
+        this.table = new HashMap<>();
+    }
+
+    public Spreadsheet(Entry from, Entry to) {
         this.table = new HashMap<>();
     }
 
@@ -29,16 +33,22 @@ public class Spreadsheet {
         throw new UnsupportedOperationException("This method isn't implemented yet");
     }
 
-    public void addTable(List<Location> locations) {
+    public void addTable(List<Entry> locations) {
+        // TODO check locations
         throw new UnsupportedOperationException("This method isn't implemented yet");
     }
 
-    public void removeTable(List<Location> locations) {
+    public void removeTable(List<Entry> locations) {
+        // TODO check locations
         throw new UnsupportedOperationException("This method isn't implemented yet");
     }
 
     // TODO consider placing in add/remove methods
     public void storeData() {
+        throw new UnsupportedOperationException("This method isn't implemented yet");
+    }
+
+    public void getData(List<Entry> locations) {
         throw new UnsupportedOperationException("This method isn't implemented yet");
     }
 
