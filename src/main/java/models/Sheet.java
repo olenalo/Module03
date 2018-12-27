@@ -8,16 +8,16 @@ public class Sheet {
 
     private Long sheetId;
     private String sheetTitle;
-    private Table table;
+    private Entry entry;
 
     /**
-     * Initialize a sheet with a default table.
+     * Initialize a sheet with a default entry.
      *
      * @param sheetId
      */
     public Sheet(Long sheetId) {
         this.sheetId = sheetId;
-        this.table = new Table();
+        this.entry = new Entry();
         this.sheetTitle = DEFAULT_SHEET_NAME;
     }
 
@@ -26,7 +26,7 @@ public class Sheet {
      */
     public Sheet() {
         this.sheetId = (long) 1; // TODO move initial index to configs somewhere
-        this.table = new Table();
+        this.entry = new Entry();
         this.sheetTitle = DEFAULT_SHEET_NAME;
     }
 
@@ -64,8 +64,8 @@ public class Sheet {
         this.sheetTitle = sheetTitle;
     }
 
-    public Table getTable() {
-        return table;
+    public Entry getEntry() {
+        return entry;
     }
 
     public void addData() {

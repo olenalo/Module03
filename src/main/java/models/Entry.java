@@ -4,12 +4,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Table {
+public class Entry {
 
     private Long tableId;
     private Map<Location, String> data;
 
-    public Table() {
+    public Entry() {
         this.data = new HashMap<>();
         this.initializeDefaultTable();
     }

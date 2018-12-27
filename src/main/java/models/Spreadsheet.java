@@ -12,7 +12,7 @@ public class Spreadsheet {
     private List<Sheet> sheets = new ArrayList<>();
     private String spreadsheetTitle;
     // TODO consider adding "creation date" and "modif date" fields
-    // TODO consider adding a "creator's username" field
+    // TODO consider adding a "creator's / owner's username" field
 
     /**
      * Initialize a spreadsheet with a default sheet.
@@ -69,29 +69,29 @@ public class Spreadsheet {
         throw new UnsupportedOperationException("This method isn't implemented yet");
     }
 
-    private Table fetchSheetTable(Long sheetId) {
+    private Entry fetchSheetTable(Long sheetId) {
         // TODO consider using different data structure for `sheets` to avoid unnecessary instantiation
         int sheetIndex = this.sheets.indexOf(new Sheet(sheetId));
         if (sheetIndex == -1) {
             throw new NoSuchElementException("No sheet with id " + sheetId + " exists.");
         }
         Sheet sheet = this.sheets.get(sheetIndex);
-        return sheet.getTable();
+        return sheet.getEntry();
     }
 
     public void addData(Long sheetId, Location location, String value) {
-        Table table = this.fetchSheetTable(sheetId);
-        table.addData(location, value);
+        Entry entry = this.fetchSheetTable(sheetId);
+        entry.addData(location, value);
     }
 
     public void addData(Long sheetId, Location from, Location to, List<String> values) {
-        Table table = this.fetchSheetTable(sheetId);
-        table.addData(from, to, values);
+        Entry entry = this.fetchSheetTable(sheetId);
+        entry.addData(from, to, values);
     }
 
     public void addData(Long sheetId, Map<Location, String> data) {
-        Table table = this.fetchSheetTable(sheetId);
-        table.addData(data);
+        Entry entry = this.fetchSheetTable(sheetId);
+        entry.addData(data);
     }
 
     // TODO implement data removal
