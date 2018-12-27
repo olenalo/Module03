@@ -35,7 +35,7 @@ public class MySQLProperties {
             this.user = properties.getProperty("user");
             this.url = properties.getProperty("url");
             this.password = properties.getProperty("password");
-            System.out.println("MySQL Properties = " + user + ", " + url + ", " + password);
+            System.out.println("MySQL Properties = " + user + ", " + url);
         } catch (Exception e) {
             e.printStackTrace();
         }

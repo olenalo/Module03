@@ -75,6 +75,13 @@ public class Sheet {
         throw new UnsupportedOperationException("This method isn't implemented yet");
     }
 
+
+    /**
+     * Get a slice of the sheet data.
+     *
+     * @param from
+     * @param to
+     */
     public void getData(Location from, Location to) {
         throw new UnsupportedOperationException("This method isn't implemented yet");
     }
