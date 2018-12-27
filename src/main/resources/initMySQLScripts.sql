@@ -18,7 +18,7 @@ create table spreadsheets.sheets (
 );
 
 
-create table spreadsheets.spreadsheet (
+create table spreadsheets.spreadsheets (
     spreadsheet_id int(11) not null auto_increment,
     title varchar(20) not null,
 	sheet_id int(11),

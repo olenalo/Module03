@@ -11,7 +11,7 @@ public class MySQLConfigs {
     public static final String MY_SQL_PROP_FILE_NAME = "mysql.properties";
 
     // Tables names
-    public static final String SPREADSHEET_TABLE_NAME = "spreadsheet";
+    public static final String SPREADSHEET_TABLE_NAME = "spreadsheets";
     public static final String TABLES_TABLE_NAME = "dataTables";
     public static final String SHEETS_TABLE_NAME = "sheets";
 
