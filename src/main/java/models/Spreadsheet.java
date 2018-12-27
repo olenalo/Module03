@@ -3,23 +3,24 @@ package models;
 import java.util.ArrayList;
 import java.util.List;
 
+import static configs.SpreadsheetConfigs.DEFAULT_SPREADSHEET_NAME;
+
 public class Spreadsheet {
 
     private List<Sheet> sheets = new ArrayList<>();
     private String spreadsheetTitle;
-
-    // TODO add a field "creation date", "modif date" or so
+    // TODO consider adding a field "creation date", "modif date" or so
 
     /**
-     * Initialize a spreadsheet with a single sheet.
-     *
-     * @param sheetId
-     * @param from
-     * @param to
+     * Initialize a spreadsheet with a default sheet.
      */
+    public Spreadsheet() {
+        this.sheets.add(new Sheet());
+        this.spreadsheetTitle = DEFAULT_SPREADSHEET_NAME;
+    }
+
     public Spreadsheet(Long sheetId, Location from, Location to) {
-        this.sheets.add(new Sheet((long) 1));
-        this.spreadsheetTitle = "Spreadsheet"; // default TODO move to a separate method
+        // TODO go on
     }
 
     public String getSpreadsheetTitle() {

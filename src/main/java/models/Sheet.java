@@ -1,5 +1,7 @@
 package models;
 
+import static configs.SpreadsheetConfigs.DEFAULT_SHEET_NAME;
+
 public class Sheet {
 
     private Long sheetId;
@@ -13,8 +15,18 @@ public class Sheet {
      */
     public Sheet(Long sheetId) {
         this.sheetId = sheetId;
-        this.sheetTitle = String.valueOf(sheetId);
         this.table = new Table();
+        this.sheetTitle = DEFAULT_SHEET_NAME;
+    }
+
+    /**
+     * Initialize the very first sheet (single default).
+     *
+     */
+    public Sheet() {
+        this.sheetId = (long) 1;
+        this.table = new Table();
+        this.sheetTitle = DEFAULT_SHEET_NAME;
     }
 
     // TODO implement the methods below; add methods with data

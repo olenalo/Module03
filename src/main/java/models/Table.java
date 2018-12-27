@@ -19,7 +19,7 @@ public class Table {
     }
 
     public void initializeDefaultTable() {
-        // TODO refactor with loops
+        // TODO refactor with loops, using `SpreadsheetConfigs`
         table.put(new Location((long) 0, (long) 0), "");
         table.put(new Location((long) 0, (long) 1), "");
         table.put(new Location((long) 1, (long) 0), "");
@@ -46,7 +46,6 @@ public class Table {
     public void removeColumn() {
         throw new UnsupportedOperationException("This method isn't implemented yet");
     }
-
 
     public Long getTableId() {
         return tableId;
