@@ -10,11 +10,11 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import static configs.MySQLConfigs.TABLES_TABLE_NAME;
+import static configs.MySQLConfigs.ENTRIES_TABLE_NAME;
 
-public class TableDao implements Dao<Spreadsheet> {
+public class EntryDao implements Dao<Spreadsheet> {
 
-    public TableDao() {
+    public EntryDao() {
     }
 
     // TODO SQL queries will go below
@@ -26,7 +26,7 @@ public class TableDao implements Dao<Spreadsheet> {
 
     @Override
     public List<Spreadsheet> getAll() {
-        String sql = "select * from " + TABLES_TABLE_NAME;
+        String sql = "select * from " + ENTRIES_TABLE_NAME;
         List<Spreadsheet> table = new ArrayList<>();
         try (Connection connection = DBCPDataSource.getInstance().getConnection()) {
             Statement statement = connection.createStatement();
