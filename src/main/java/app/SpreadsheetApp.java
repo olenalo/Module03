@@ -1,15 +1,15 @@
 package app;
 
 import dao.SheetDao;
-import models.Spreadsheet;
+import models.Sheet;
 
 import java.util.List;
 
 public class SpreadsheetApp {
-    private SheetDao spreadsheetDao = new SheetDao();
+    private static SheetDao sheetDao = new SheetDao();
 
-    public List<Spreadsheet> getAllData() {
-        return spreadsheetDao.getAll();
+    public static List<Sheet> getAllData() {
+        return sheetDao.getAll();
     }
 
     // TODO other CRUD methods go below

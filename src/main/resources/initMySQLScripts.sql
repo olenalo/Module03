@@ -3,7 +3,7 @@
 
 
 # Normally this should correspond to a particular spreadsheet's file name / id or so
-# This exact part is implemented within Module03 A-Level
+# This exact part is implemented within the module.\
 create database myspreadsheet;
 
 create table myspreadsheet.sheets (
@@ -27,7 +27,7 @@ create table myspreadsheet.entries (
 
 
 
-# This part is not implemented within Module03 A-Level
+# This part is not implemented within the module
 # (API: add/remove new spreadsheet...)
 
 /**
