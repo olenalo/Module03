@@ -6,15 +6,13 @@
 # This exact part is implemented within Module03 A-Level
 create database myspreadsheet;
 
-
 create table myspreadsheet.sheets (
     sheet_id int(11) not null,  # not `auto_increment`, since we pass id from Java
     title varchar(20) not null,
     rows_number int(11) not null,
     columns_number int(11) not null,
     spreadsheet_id int(11),
-    primary key (sheet_id),
-    foreign key (spreadsheet_id) references spreadsheets.spreadsheets(spreadsheet_id)
+    primary key (sheet_id)
 );
 
 create table myspreadsheet.entries (
@@ -24,7 +22,7 @@ create table myspreadsheet.entries (
     cell_value varchar(20),
     sheet_id int(11),
     primary key (entry_id),
-    foreign key (sheet_id) references spreadsheets.sheets(sheet_id)
+    foreign key (sheet_id) references myspreadsheet.sheets(sheet_id)
 );
 
 

@@ -1,6 +1,7 @@
 package models;
 
-import java.util.Objects;
+import java.util.ArrayList;
+import java.util.List;
 
 import static configs.SpreadsheetConfigs.DEFAULT_SHEET_NAME;
 
@@ -8,16 +9,18 @@ public class Sheet {
 
     private Long sheetId;
     private String sheetTitle;
-    private Entry entry;
+    private Long rowsNumber;
+    private Long columnsNumber;
+    private List<Entry> entries;
 
     /**
-     * Initialize a sheet with a default entry.
+     * Initialize a sheet with a default entries.
      *
      * @param sheetId
      */
     public Sheet(Long sheetId) {
         this.sheetId = sheetId;
-        this.entry = new Entry();
+        this.entries = new ArrayList<>();
         this.sheetTitle = DEFAULT_SHEET_NAME;
     }
 
@@ -26,7 +29,7 @@ public class Sheet {
      */
     public Sheet() {
         this.sheetId = (long) 1; // TODO move initial index to configs somewhere
-        this.entry = new Entry();
+        this.entries = new ArrayList<>();
         this.sheetTitle = DEFAULT_SHEET_NAME;
     }
 
@@ -64,8 +67,8 @@ public class Sheet {
         this.sheetTitle = sheetTitle;
     }
 
-    public Entry getEntry() {
-        return entry;
+    public List<Entry> getEntries() {
+        return entries;
     }
 
     public void addData() {
@@ -76,16 +79,19 @@ public class Sheet {
         throw new UnsupportedOperationException("This method isn't implemented yet");
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Sheet sheet = (Sheet) o;
-        return sheetId.equals(sheet.sheetId);
+    public Long getRowsNumber() {
+        return rowsNumber;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(sheetId);
+    public void setRowsNumber(Long rowsNumber) {
+        this.rowsNumber = rowsNumber;
+    }
+
+    public Long getColumnsNumber() {
+        return columnsNumber;
+    }
+
+    public void setColumnsNumber(Long columnsNumber) {
+        this.columnsNumber = columnsNumber;
     }
 }

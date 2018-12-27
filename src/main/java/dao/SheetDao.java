@@ -1,6 +1,6 @@
 package dao;
 
-import models.Spreadsheet;
+import models.Sheet;
 import utilities.DBCPDataSource;
 
 import java.sql.Connection;
@@ -12,22 +12,20 @@ import java.util.List;
 
 import static configs.MySQLConfigs.SHEETS_TABLE_NAME;
 
-public class SheetDao implements Dao<Spreadsheet> {
+public class SheetDao implements Dao<Sheet> {
 
     public SheetDao() {
     }
 
-    // TODO SQL queries will go below
-
     @Override
-    public Spreadsheet get(long id) {
+    public Sheet get(long id) {
         return null;
     }
 
     @Override
-    public List<Spreadsheet> getAll() {
+    public List<Sheet> getAll() {
         String sql = "select * from " + SHEETS_TABLE_NAME;
-        List<Spreadsheet> table = new ArrayList<>();
+        List<Sheet> table = new ArrayList<>();
         try (Connection connection = DBCPDataSource.getInstance().getConnection()) {
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(sql);
@@ -41,17 +39,17 @@ public class SheetDao implements Dao<Spreadsheet> {
     }
 
     @Override
-    public void save(Spreadsheet spreadsheet) {
-
+    public void save(Sheet spreadsheet) {
+        throw new UnsupportedOperationException("This method isn't implemented yet");
     }
 
     @Override
-    public void update(Spreadsheet spreadsheet, String[] params) {
-
+    public void update(Sheet spreadsheet, String[] params) {
+        throw new UnsupportedOperationException("This method isn't implemented yet");
     }
 
     @Override
-    public void delete(Spreadsheet spreadsheet) {
-
+    public void delete(Sheet spreadsheet) {
+        throw new UnsupportedOperationException("This method isn't implemented yet");
     }
 }
