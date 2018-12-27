@@ -7,55 +7,32 @@ import java.util.Map;
 public class Table {
 
     private Long tableId;
-    private Map<Location, String> table;
+    private Map<Location, String> data;
 
     public Table() {
-        this.table = new HashMap<>();
+        this.data = new HashMap<>();
         this.initializeDefaultTable();
     }
 
     public void initializeDefaultTable() {
         // TODO refactor with loops, using `SpreadsheetConfigs`
         // TODO consider removing; this is GUI actually
-        table.put(new Location((long) 0, (long) 0), "");
-        table.put(new Location((long) 0, (long) 1), "");
-        table.put(new Location((long) 1, (long) 0), "");
-        table.put(new Location((long) 1, (long) 1), "");
+        data.put(new Location((long) 0, (long) 0), "");
+        data.put(new Location((long) 0, (long) 1), "");
+        data.put(new Location((long) 1, (long) 0), "");
+        data.put(new Location((long) 1, (long) 1), "");
     }
 
-    // TODO make it possible to add values of different types
-
-    /**
-     * Add a single value to a cell (datum).
-     *
-     * @param location
-     * @param value
-     */
-    public void addDatum(Location location, String value) {
-        // TODO check location (no data can be added to non-existing cell)
-        table.put(location, value);
+    public Long getTableId() {
+        return tableId;
     }
 
-    /**
-     * Add data to multiple cells.
-     *
-     * @param from
-     * @param to
-     * @param values
-     */
-    public void addData(Location from, Location to, List<String> values) {
-        // TODO check location (no data can be added to non-existing cell)
-        // TODO fill in the table; non-existent values to become `null`?
+    public void setTableId(Long tableId) {
+        this.tableId = tableId;
     }
 
-    /**
-     * Add data to multiple cells.
-     *
-     * @param table
-     */
-    public void addData(Map<Location, String> table) {
-        // TODO check location (no data can be added to non-existing cell)
-        // TODO fill in the table
+    public Map<Location, String> getData() {
+        return data;
     }
 
     // TODO implement the methods below; add methods with data
@@ -75,15 +52,38 @@ public class Table {
         throw new UnsupportedOperationException("This method isn't implemented yet");
     }
 
-    public Long getTableId() {
-        return tableId;
+    // TODO make it possible to add values of different types
+
+    /**
+     * Add a single value to a cell (datum).
+     *
+     * @param location
+     * @param value
+     */
+    public void addData(Location location, String value) {
+        // TODO check location (no data can be added to non-existing cell)
+        data.put(location, value);
     }
 
-    public void setTableId(Long tableId) {
-        this.tableId = tableId;
+    /**
+     * Add data to multiple cells.
+     *
+     * @param from
+     * @param to
+     * @param values
+     */
+    public void addData(Location from, Location to, List<String> values) {
+        // TODO check location (no data can be added to non-existing cell)
+        // TODO fill in the data; non-existent values to become `null`?
     }
 
-    public Map<Location, String> getTable() {
-        return table;
+    /**
+     * Add data to multiple cells.
+     *
+     * @param data
+     */
+    public void addData(Map<Location, String> data) {
+        // TODO check location (no data can be added to non-existing cell)
+        // TODO fill in the data
     }
 }

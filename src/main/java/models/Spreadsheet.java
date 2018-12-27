@@ -2,6 +2,8 @@ package models;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.NoSuchElementException;
 
 import static configs.SpreadsheetConfigs.DEFAULT_SPREADSHEET_NAME;
 
@@ -10,6 +12,7 @@ public class Spreadsheet {
     private List<Sheet> sheets = new ArrayList<>();
     private String spreadsheetTitle;
     // TODO consider adding a field "creation date", "modif date" or so
+    // TODO consider adding a "creator's username" field or so
 
     /**
      * Initialize a spreadsheet with a default sheet.
@@ -45,7 +48,7 @@ public class Spreadsheet {
      * <p>
      * Same as removing a table.
      */
-    public void removeSheet() {
+    public void removeSheet(Long sheetId) {
         throw new UnsupportedOperationException("This method isn't implemented yet");
     }
 
@@ -66,4 +69,28 @@ public class Spreadsheet {
         throw new UnsupportedOperationException("This method isn't implemented yet");
     }
 
+    private Table fetchSheetTable(Long sheetId) {
+        // TODO consider using different data structure for `sheets` to avoid unnecessary instantiation
+        int sheetIndex = this.sheets.indexOf(new Sheet(sheetId));
+        if (sheetIndex == -1) {
+            throw new NoSuchElementException("No sheet with id " + sheetId + " exists.");
+        }
+        Sheet sheet = this.sheets.get(sheetIndex);
+        return sheet.getTable();
+    }
+
+    public void addData(Long sheetId, Location location, String value) {
+        Table table = this.fetchSheetTable(sheetId);
+        table.addData(location, value);
+    }
+
+    public void addData(Long sheetId, Location from, Location to, List<String> values) {
+        Table table = this.fetchSheetTable(sheetId);
+        table.addData(from, to, values);
+    }
+
+    public void addData(Long sheetId, Map<Location, String> data) {
+        Table table = this.fetchSheetTable(sheetId);
+        table.addData(data);
+    }
 }

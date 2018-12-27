@@ -1,5 +1,7 @@
 package models;
 
+import java.util.Objects;
+
 import static configs.SpreadsheetConfigs.DEFAULT_SHEET_NAME;
 
 public class Sheet {
@@ -21,10 +23,9 @@ public class Sheet {
 
     /**
      * Initialize the very first sheet (single default).
-     *
      */
     public Sheet() {
-        this.sheetId = (long) 1;
+        this.sheetId = (long) 1; // TODO move initial index to configs somewhere
         this.table = new Table();
         this.sheetTitle = DEFAULT_SHEET_NAME;
     }
@@ -51,6 +52,7 @@ public class Sheet {
     }
 
     public void setSheetId(Long sheetId) {
+        // TODO check for uniqueness
         this.sheetId = sheetId;
     }
 
@@ -66,13 +68,24 @@ public class Sheet {
         return table;
     }
 
-
-    // TODO consider placing in add/remove methods
-    public void storeData() {
+    public void addData() {
         throw new UnsupportedOperationException("This method isn't implemented yet");
     }
 
     public void getData(Location from, Location to) {
         throw new UnsupportedOperationException("This method isn't implemented yet");
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Sheet sheet = (Sheet) o;
+        return sheetId.equals(sheet.sheetId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(sheetId);
     }
 }

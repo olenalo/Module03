@@ -26,16 +26,16 @@ public class SpreadsheetDao implements Dao<Spreadsheet> {
 
     @Override
     public void save(Spreadsheet spreadsheet) {
-
+        throw new UnsupportedOperationException("This method isn't implemented yet");
     }
 
     @Override
     public void update(Spreadsheet spreadsheet, String[] params) {
-
+        throw new UnsupportedOperationException("This method isn't implemented yet");
     }
 
     @Override
     public void delete(Spreadsheet spreadsheet) {
-
+        throw new UnsupportedOperationException("This method isn't implemented yet");
     }
 }

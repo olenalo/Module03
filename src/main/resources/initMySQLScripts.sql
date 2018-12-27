@@ -3,7 +3,7 @@
 create database spreadsheets;
 
 create table spreadsheets.dataTables (
-    table_id int(11) not null auto_increment,
+    table_id int(11) not null,  # not `auto_increment`, since we pass id from Java
     title varchar(20) not null,
     primary key (table_id)
 );
