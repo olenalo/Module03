@@ -1,54 +1,55 @@
 package models;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class Spreadsheet {
 
-    private Map<Integer, Entry> table;
+    private List<Sheet> sheets = new ArrayList<>();
 
-    public Spreadsheet() {
-        this.table = new HashMap<>();
+    /**
+     * Initialize a spreadsheet with a single sheet.
+     *
+     * @param sheetId
+     * @param from
+     * @param to
+     */
+    public Spreadsheet(Long sheetId, Location from, Location to) {
+        this.sheets.add(new Sheet((long) 1));
     }
 
-    public Spreadsheet(Entry from, Entry to) {
-        this.table = new HashMap<>();
-    }
-
-    // TODO implement the methods below
-    public void addRow() {
+    /**
+     * Add a new sheet.
+     * <p>
+     * Same as adding a new table.
+     */
+    public void addSheet() {
         throw new UnsupportedOperationException("This method isn't implemented yet");
     }
 
-    public void addColumn() {
+    /**
+     * Remove a particular sheet.
+     * <p>
+     * Same as removing a table.
+     */
+    public void removeSheet() {
         throw new UnsupportedOperationException("This method isn't implemented yet");
     }
 
-    public void removeRow() {
+    // TODO implement the methods below; add methods with data
+    public void addRow(Long sheetId) {
         throw new UnsupportedOperationException("This method isn't implemented yet");
     }
 
-    public void removeColumn() {
+    public void addColumn(Long sheetId) {
         throw new UnsupportedOperationException("This method isn't implemented yet");
     }
 
-    public void addTable(List<Entry> locations) {
-        // TODO check locations
+    public void removeRow(Long sheetId) {
         throw new UnsupportedOperationException("This method isn't implemented yet");
     }
 
-    public void removeTable(List<Entry> locations) {
-        // TODO check locations
-        throw new UnsupportedOperationException("This method isn't implemented yet");
-    }
-
-    // TODO consider placing in add/remove methods
-    public void storeData() {
-        throw new UnsupportedOperationException("This method isn't implemented yet");
-    }
-
-    public void getData(List<Entry> locations) {
+    public void removeColumn(Long sheetId) {
         throw new UnsupportedOperationException("This method isn't implemented yet");
     }
 
