@@ -26,6 +26,10 @@ public class Table {
         table.put(new Location((long) 1, (long) 1), "");
     }
 
+    public void addData() {
+        // TODO implement
+    }
+
     // TODO implement the methods below; add methods with data
     public void addRow() {
         throw new UnsupportedOperationException("This method isn't implemented yet");

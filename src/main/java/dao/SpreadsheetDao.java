@@ -1,16 +1,10 @@
 package dao;
 
 import models.Spreadsheet;
-import utilities.DBCPDataSource;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.List;
 
-import static configs.MySQLConfigs.spreadsheetTable;
+import static configs.MySQLConfigs.SPREADSHEET_TABLE_NAME;
 
 public class SpreadsheetDao implements Dao<Spreadsheet> {
 
@@ -26,7 +20,7 @@ public class SpreadsheetDao implements Dao<Spreadsheet> {
 
     @Override
     public List<Spreadsheet> getAll() {
-        String sql = "select * from " + spreadsheetTable;
+        String sql = "select * from " + SPREADSHEET_TABLE_NAME;
         throw new UnsupportedOperationException("This method isn't implemented yet");
     }
 

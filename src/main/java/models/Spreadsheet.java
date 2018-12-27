@@ -6,6 +6,8 @@ import java.util.List;
 public class Spreadsheet {
 
     private List<Sheet> sheets = new ArrayList<>();
+    private String spreadsheetTitle;
+
     // TODO add a field "creation date", "modif date" or so
 
     /**
@@ -17,6 +19,15 @@ public class Spreadsheet {
      */
     public Spreadsheet(Long sheetId, Location from, Location to) {
         this.sheets.add(new Sheet((long) 1));
+        this.spreadsheetTitle = "Spreadsheet"; // default TODO move to a separate method
+    }
+
+    public String getSpreadsheetTitle() {
+        return spreadsheetTitle;
+    }
+
+    public void setSpreadsheetTitle(String spreadsheetTitle) {
+        this.spreadsheetTitle = spreadsheetTitle;
     }
 
     /**
@@ -53,6 +64,5 @@ public class Spreadsheet {
     public void removeColumn(Long sheetId) {
         throw new UnsupportedOperationException("This method isn't implemented yet");
     }
-
 
 }

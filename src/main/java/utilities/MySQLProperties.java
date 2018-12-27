@@ -4,7 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.Properties;
 
-import static configs.MySQLConfigs.mySqlPropFileName;
+import static configs.MySQLConfigs.MY_SQL_PROP_FILE_NAME;
 
 public class MySQLProperties {
 
@@ -25,10 +25,10 @@ public class MySQLProperties {
     }
 
     private void setPropValues() {
-        try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream(mySqlPropFileName)) {
+        try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream(MY_SQL_PROP_FILE_NAME)) {
             Properties properties = new Properties();
             if (inputStream == null) {
-                throw new FileNotFoundException("Property file '" + mySqlPropFileName + "' is not found.");
+                throw new FileNotFoundException("Property file '" + MY_SQL_PROP_FILE_NAME + "' is not found.");
             } else {
                 properties.load(inputStream);
             }

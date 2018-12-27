@@ -10,7 +10,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import static configs.MySQLConfigs.sheetsTableName;
+import static configs.MySQLConfigs.SHEETS_TABLE_NAME;
 
 public class SheetDao implements Dao<Spreadsheet> {
 
@@ -26,7 +26,7 @@ public class SheetDao implements Dao<Spreadsheet> {
 
     @Override
     public List<Spreadsheet> getAll() {
-        String sql = "select * from " + sheetsTableName;
+        String sql = "select * from " + SHEETS_TABLE_NAME;
         List<Spreadsheet> table = new ArrayList<>();
         try (Connection connection = DBCPDataSource.getInstance().getConnection()) {
             Statement statement = connection.createStatement();
