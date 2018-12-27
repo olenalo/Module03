@@ -11,8 +11,8 @@ public class Spreadsheet {
 
     private List<Sheet> sheets = new ArrayList<>();
     private String spreadsheetTitle;
-    // TODO consider adding a field "creation date", "modif date" or so
-    // TODO consider adding a "creator's username" field or so
+    // TODO consider adding "creation date" and "modif date" fields
+    // TODO consider adding a "creator's username" field
 
     /**
      * Initialize a spreadsheet with a default sheet.
@@ -93,4 +93,6 @@ public class Spreadsheet {
         Table table = this.fetchSheetTable(sheetId);
         table.addData(data);
     }
+
+    // TODO implement data removal
 }
