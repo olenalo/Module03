@@ -1,12 +1,12 @@
 package app;
 
-import dao.SpreadsheetDao;
+import dao.SheetDao;
 import models.Spreadsheet;
 
 import java.util.List;
 
 public class SpreadsheetApp {
-    private SpreadsheetDao spreadsheetDao = new SpreadsheetDao();
+    private SheetDao spreadsheetDao = new SheetDao();
 
     public List<Spreadsheet> getAllData() {
         return spreadsheetDao.getAll();

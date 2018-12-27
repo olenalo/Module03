@@ -10,32 +10,24 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import static configs.MySQLConfigs.spreadsheetTable;
+
 public class SpreadsheetDao implements Dao<Spreadsheet> {
 
     public SpreadsheetDao() {
     }
 
-    // TODO SQL queries will go below
+    // TODO combine sheet and table dao here
 
     @Override
     public Spreadsheet get(long id) {
-        return null;
+        throw new UnsupportedOperationException("This method isn't implemented yet");
     }
 
     @Override
     public List<Spreadsheet> getAll() {
-        String sql = "select * from spreadsheets";
-        List<Spreadsheet> table = new ArrayList<>();
-        try (Connection connection = DBCPDataSource.getInstance().getConnection()) {
-            Statement statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery(sql);
-            while (rs.next()) {
-                // TODO implement
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return table;
+        String sql = "select * from " + spreadsheetTable;
+        throw new UnsupportedOperationException("This method isn't implemented yet");
     }
 
     @Override

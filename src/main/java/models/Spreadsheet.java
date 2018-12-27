@@ -6,6 +6,7 @@ import java.util.List;
 public class Spreadsheet {
 
     private List<Sheet> sheets = new ArrayList<>();
+    // TODO add a field "creation date", "modif date" or so
 
     /**
      * Initialize a spreadsheet with a single sheet.

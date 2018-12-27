@@ -9,4 +9,10 @@ public class MySQLConfigs {
 
     // Config properties files
     public static final String mySqlPropFileName = "mysql.properties";
+
+    // Tables names
+    public static final String spreadsheetTable = "spreadsheet";
+    public static final String tablesTableName = "sheetsTables";
+    public static final String sheetsTableName = "sheets";
+
 }
