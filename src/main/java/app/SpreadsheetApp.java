@@ -49,11 +49,8 @@ public class SpreadsheetApp {
         return cellDao.getAllFilteredBy(sheetId);
     }
 
-    // TODO get() datum
-    // TODO get() data/datum of a particular sheet
-    // TODO addData()  // other signatures
-    // TODO remove, update
-    // TODO renaming API (set spreadsheet and sheet name)
-    // TODO create new sheet
+    // TODO get() data/data slice/datum of a particular sheet
+    // TODO addData()  - other signatures
+    // TODO remove, update e.g. rename (set custom sheet name)
 
 }

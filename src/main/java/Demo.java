@@ -14,7 +14,7 @@ public class Demo {
 
         System.out.println("----------- Print the 1st sheet -----------");
         System.out.println(SpreadsheetApp.getSheet((long) 1));
-        
+
         System.out.println("----------- Print all sheets -----------");
         printSheets(SpreadsheetApp.getAllSheets());
 
