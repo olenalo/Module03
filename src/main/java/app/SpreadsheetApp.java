@@ -12,42 +12,42 @@ import java.util.Map;
 import static configs.MySQLConfigs.ZERO_INDEX;
 
 public class SpreadsheetApp {
-    private static SheetDao sheetDao = new SheetDao();
-    private static DataCellDao cellDao = new DataCellDao();
+    private SheetDao sheetDao = new SheetDao();
+    private DataCellDao cellDao = new DataCellDao();
 
-    public static void addSheet() {
+    public void addSheet() {
         sheetDao.save(new Sheet(ZERO_INDEX));
     }
 
-    public static void removeSheet(long sheetId) {
+    public void removeSheet(long sheetId) {
         throw new UnsupportedOperationException("This method isn't implemented yet");
     }
 
-    public static void removeRow(long sheetId) {
+    public void removeRow(long sheetId) {
         throw new UnsupportedOperationException("This method isn't implemented yet");
     }
 
-    public static void removeRow(long sheetId, long rowNumber) {
+    public void removeRow(long sheetId, long rowNumber) {
         throw new UnsupportedOperationException("This method isn't implemented yet");
     }
 
-    public static void removeColumn(long sheetId) {
+    public void removeColumn(long sheetId) {
         throw new UnsupportedOperationException("This method isn't implemented yet");
     }
 
-    public static void removeColumn(long sheetId, long columnNumber) {
+    public void removeColumn(long sheetId, long columnNumber) {
         throw new UnsupportedOperationException("This method isn't implemented yet");
     }
 
-    public static Sheet getSheet(long id) {
+    public Sheet getSheet(long id) {
         return sheetDao.get(id);
     }
 
-    public static List<Sheet> getAllSheets() {
+    public List<Sheet> getAllSheets() {
         return sheetDao.getAll();
     }
 
-    public static void addData(
+    public void addData(
             Location from,
             Location to,
             List<String> values,
@@ -55,70 +55,70 @@ public class SpreadsheetApp {
         throw new UnsupportedOperationException("This method isn't implemented yet");
     }
 
-    public static void addData(Map<Location, String> data) {
+    public void addData(Map<Location, String> data) {
         throw new UnsupportedOperationException("This method isn't implemented yet");
     }
 
-    public static void addData(
+    public void addData(
             Location location,
             String value,
             Long sheetId) {
         cellDao.save(new DataCell(ZERO_INDEX, location, value, sheetId));
     }
 
-    public static DataCell getData(long cellId) {
+    public DataCell getData(long cellId) {
         return cellDao.get(cellId);
     }
 
-    public static List<DataCell> getAllData() {
+    public List<DataCell> getAllData() {
         return cellDao.getAll();
     }
 
-    public static void removeData(Location location, long sheetId) {
+    public void removeData(Location location, long sheetId) {
         throw new UnsupportedOperationException("This method isn't implemented yet");
     }
 
-    public static void removeData(Location from, Location to, long sheetId) {
+    public void removeData(Location from, Location to, long sheetId) {
         throw new UnsupportedOperationException("This method isn't implemented yet");
     }
 
-    public static void removeData(Map<Location, String> data, long sheetId) {
+    public void removeData(Map<Location, String> data, long sheetId) {
         throw new UnsupportedOperationException("This method isn't implemented yet");
     }
 
-    public static void renameSheet(long sheetId, String newName) {
+    public void renameSheet(long sheetId, String newName) {
         throw new UnsupportedOperationException("This method isn't implemented yet");
     }
 
-    public static void updateData(Location location, long sheetId) {
+    public void updateData(Location location, long sheetId) {
         throw new UnsupportedOperationException("This method isn't implemented yet");
     }
 
-    public static void updateData(Location from, Location to, long sheetId) {
+    public void updateData(Location from, Location to, long sheetId) {
         throw new UnsupportedOperationException("This method isn't implemented yet");
     }
 
-    public static void updateData(Map<Location, String> data, long sheetId) {
+    public void updateData(Map<Location, String> data, long sheetId) {
         throw new UnsupportedOperationException("This method isn't implemented yet");
     }
 
-    public static DataCell getDataOfSheet(long dataId, long sheetId) {
+    public DataCell getDataOfSheet(long dataId, long sheetId) {
         throw new UnsupportedOperationException("This method isn't implemented yet");
     }
 
-    public static List<DataCell> getDataOfSheet(long sheetId) {
+    public List<DataCell> getDataOfSheet(long sheetId) {
         return cellDao.getAllFilteredBy(sheetId);
     }
 
-    public static List<DataCell> getDataOfSheet(Location location, long sheetId) {
+    public List<DataCell> getDataOfSheet(Location location, long sheetId) {
         throw new UnsupportedOperationException("This method isn't implemented yet");
     }
 
-    public static List<DataCell> getDataOfSheet(Location from, Location to, long sheetId) {
+    public List<DataCell> getDataOfSheet(Location from, Location to, long sheetId) {
         throw new UnsupportedOperationException("This method isn't implemented yet");
     }
 
-    public static List<DataCell> getDataOfSheet(Map<Location, String> data, long sheetId) {
+    public List<DataCell> getDataOfSheet(Map<Location, String> data, long sheetId) {
         throw new UnsupportedOperationException("This method isn't implemented yet");
     }
 

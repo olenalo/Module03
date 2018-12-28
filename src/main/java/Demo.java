@@ -7,44 +7,46 @@ import static utilities.PrintUtils.printSheets;
 public class Demo {
 
     public static void main(String[] args) {
+        SpreadsheetApp app = new SpreadsheetApp();
         // Sheets
         // Add a new sheet
-        SpreadsheetApp.addSheet(); // TODO consider moving one call to `SpreadsheetApp` (should happen at least once)
-        SpreadsheetApp.addSheet();
+        app.addSheet(); // TODO consider moving one call to `SpreadsheetApp` (should happen at least once)
+        app.addSheet();
 
         System.out.println("----------- Print the 1st sheet -----------");
-        System.out.println(SpreadsheetApp.getSheet((long) 1));
+        System.out.println(app.getSheet((long) 1));
 
         System.out.println("----------- Print all sheets -----------");
-        printSheets(SpreadsheetApp.getAllSheets());
+        printSheets(app.getAllSheets());
 
         // Entries
         // Add a single value to a cell
-        SpreadsheetApp.addData(
+        app.addData(
                 new Location((long) 0, (long) 0),
                 "123",
                 (long) 1);
-        SpreadsheetApp.addData(
+        app.addData(
                 new Location((long) 0, (long) 1),
                 "Some Value",
                 (long) 1);
         // TODO check failure if adding with non-existing location
-        SpreadsheetApp.addData(
+        app.addData(
                 new Location((long) 0, (long) 0),
                 "123-568",
-                (long) 2);
+                (long) 2
+        );
 
         System.out.println("----------- Print the first datum -----------");
-        System.out.println(SpreadsheetApp.getData((long) 1));
+        System.out.println(app.getData((long) 1));
 
         System.out.println("----------- Print all data -----------");
-        printCells(SpreadsheetApp.getAllData());
+        printCells(app.getAllData());
 
         System.out.println("----------- Print all data of the 1st sheet sheet -----------");
-        printCells(SpreadsheetApp.getDataOfSheet((long) 1));
+        printCells(app.getDataOfSheet((long) 1));
 
         // System.out.println("----------- Print the first datum of the first sheet-----------");
-        // System.out.println(SpreadsheetApp.getDataOfSheet((long) 1, (long) 1));
+        // System.out.println(app.getDataOfSheet((long) 1, (long) 1));
         // ...
 
     }

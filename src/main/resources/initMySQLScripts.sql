@@ -33,6 +33,9 @@ select * from myspreadsheet.cells where cell_id=1;
 select * from myspreadsheet.cells where sheet_id=1;
 select * from myspreadsheet.cells where sheet_id=2;
 
+
+
+
 # This part is not implemented within the module
 # (API: add/remove new spreadsheet...)
 
