@@ -28,6 +28,9 @@ public class SheetDao implements Dao<Sheet> {
 
     public boolean locationExists(Location location, long sheetId) {
         Sheet sheet = this.get(sheetId);
+        if (sheet == null) {
+            throw new IllegalArgumentException("Please provide id of an existing sheet.");
+        }
         long rowsNumber = sheet.getRowsNumber();
         long columnsNumber = sheet.getColumnsNumber();
         return location.getRowIndex() <= rowsNumber && location.getColumnIndex() <= columnsNumber;
