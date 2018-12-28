@@ -21,14 +21,13 @@ create table myspreadsheet.cells (
     cell_value varchar(20),
     sheet_id int(11),
     primary key (cell_id),
-    foreign key (sheet_id) references myspreadsheet.sheets(sheet_id),
-    unique (row_index),
-    unique (column_index)
+    foreign key (sheet_id) references myspreadsheet.sheets(sheet_id)
 );
 
 select * from myspreadsheet.sheets;
 select * from myspreadsheet.cells;
-
+select * from myspreadsheet.cells where sheet_id=1;
+select * from myspreadsheet.cells where sheet_id=2;
 
 # This part is not implemented within the module
 # (API: add/remove new spreadsheet...)

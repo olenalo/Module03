@@ -21,7 +21,7 @@ public class Sheet {
         this.id = id;
         this.entries = new HashMap<>();
         this.initializeDefaultSize();
-        this.title = DEFAULT_SHEET_NAME;
+        this.title = DEFAULT_SHEET_NAME; // TODO make it unique for each sheet
     }
 
     public Sheet(Long id, String title, Long rowsNumber, Long columnsNumber) {

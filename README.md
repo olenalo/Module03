@@ -6,7 +6,7 @@ Initial MySQL scripts for creating database and tables can be found in the `reso
 
 ## Design
 
-* A spreadsheet contains sheet(s), with each sheet having entry(ies).
+* A spreadsheet contains sheet(s), with each sheet having cell(s).
 * There should be two parts in the app: 
 
 (1) owner level - spreadsheets are stored per owner; this data is stored in a separate database (e.g. `spreadsheets`). 

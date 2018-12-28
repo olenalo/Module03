@@ -20,9 +20,7 @@ public class DataCellDao implements Dao<DataCell> {
         throw new UnsupportedOperationException("This method isn't implemented yet");
     }
 
-    @Override
-    public List<DataCell> getAll() {
-        String sql = "select * from " + DATA_CELLS_TABLE_NAME;
+    private List<DataCell> fetchCellsBySqlQuery(String sql) {
         List<DataCell> cells = new ArrayList<>();
         try (Connection connection = DBCPDataSource.getInstance().getConnection()) {
             Statement statement = connection.createStatement();
@@ -41,19 +39,26 @@ public class DataCellDao implements Dao<DataCell> {
     }
 
     @Override
+    public List<DataCell> getAll() {
+        return this.fetchCellsBySqlQuery("select * from " + DATA_CELLS_TABLE_NAME);
+    }
+
+    public List<DataCell> getAllFilteredBy(long sheetId) {
+        return this.fetchCellsBySqlQuery("select * from " + DATA_CELLS_TABLE_NAME + " where sheet_id=" + sheetId);
+    }
+
+
+    @Override
     public void save(DataCell cell) {
         String params = cell.getId() + ", " +
                 cell.getLocation().getRowIndex() + ", " +
-                cell.getLocation().getColumnIndex() + ", " +
-                cell.getValue() + ", " +
+                cell.getLocation().getColumnIndex() + ", '" +
+                cell.getValue() + "', " +
                 cell.getSheetId();
         String sql = "insert into " + DATA_CELLS_TABLE_NAME + " values (" + params + ")";
         try (Connection connection = DBCPDataSource.getInstance().getConnection()) {
             Statement statement = connection.createStatement();
             statement.executeUpdate(sql);
-        } catch (SQLIntegrityConstraintViolationException e) {
-            System.out.println("Please provide a unique location for a cell.");
-            e.printStackTrace();
         } catch (SQLException e) {
             e.printStackTrace();
         }

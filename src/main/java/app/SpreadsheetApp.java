@@ -37,9 +37,14 @@ public class SpreadsheetApp {
         return cellDao.getAll();
     }
 
-    // TODO getAllDataOfSheet()
+    public static List<DataCell> getAllDataOfSheet(long sheetId) {
+        return cellDao.getAllFilteredBy(sheetId);
+    }
+
+    // TODO get() datum
+    // TODO get() data/datum of a particular sheet
     // TODO addData()  // other signatures
-    // TODO other CRUD methods go below
+    // TODO remove, update
     // TODO renaming API (set spreadsheet and sheet name)
     // TODO create new sheet
 
