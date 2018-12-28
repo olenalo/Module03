@@ -16,6 +16,7 @@ public class SpreadsheetApp {
     private DataCellDao cellDao = new DataCellDao();
 
     public SpreadsheetApp() {
+        // TODO consider removing (sheet's created on s higher level, i.e. upon spreadsheet creation)
         this.addSheet(); // Default sheet is always created
     }
 
