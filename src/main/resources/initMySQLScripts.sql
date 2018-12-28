@@ -15,34 +15,33 @@ create table myspreadsheet.sheets (
 );
 
 create table myspreadsheet.cells (
-    cell_id int(11) not null auto_increment,  
+    # cell_id int(11) not null auto_increment,  
     row_index int(11) not null,
     column_index int(11) not null,
     cell_value varchar(20),
-    sheet_id int(11),
-    primary key (cell_id),
-    foreign key (sheet_id) references myspreadsheet.sheets(sheet_id)
+    sheet_id int(11) not null,
+    # primary key (cell_id),
+    foreign key (sheet_id) references myspreadsheet.sheets(sheet_id),
+    unique key sheet_id (sheet_id, row_index, column_index)
 );
 
 select * from myspreadsheet.sheets;
 select * from myspreadsheet.sheets where sheet_id=1;
 
 select * from myspreadsheet.cells;
-select * from myspreadsheet.cells where cell_id=1;
+# select * from myspreadsheet.cells where cell_id=1;
 
 select * from myspreadsheet.cells where sheet_id=1;
 select * from myspreadsheet.cells where sheet_id=2;
 
-select * from myspreadsheet.cells where sheet_id=1 and cell_id=1;
+# select * from myspreadsheet.cells where sheet_id=1 and cell_id=1;
 select * from myspreadsheet.cells where sheet_id=1 and row_index=0 and column_index=0;
-
-
 
 
 # This part is not implemented within the module
 # (API: add/remove new spreadsheet...)
 
-/**
+/*
 create database spreadsheets;
 
 create table spreadsheets.owners (

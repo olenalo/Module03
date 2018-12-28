@@ -2,7 +2,6 @@ package dao;
 
 import models.DataCell;
 import models.Location;
-import models.Sheet;
 import utilities.DBCPDataSource;
 
 import java.sql.*;
@@ -23,10 +22,9 @@ public class DataCellDao implements Dao<DataCell> {
             ResultSet rs = statement.executeQuery(sql);
             while (rs.next()) {
                 cell = new DataCell(
-                        rs.getLong(1),
-                        new Location(rs.getLong(2), rs.getLong(3)),
-                        rs.getString(4),
-                        rs.getLong(5)
+                        new Location(rs.getLong(1), rs.getLong(2)),
+                        rs.getString(3),
+                        rs.getLong(4)
                 );
             }
         } catch (SQLException e) {
@@ -37,15 +35,7 @@ public class DataCellDao implements Dao<DataCell> {
 
     @Override
     public DataCell get(long id) {
-        String sql = "select * from " + DATA_CELLS_TABLE_NAME + " where cell_id=" + id;
-        return this.fetchCellBySqlQuery(sql);
-    }
-
-    public DataCell get(long cellId, long sheetId) {
-        String sql = "select * from " + DATA_CELLS_TABLE_NAME +
-                " where cell_id=" + cellId +
-                " and sheet_id=" + sheetId;
-        return this.fetchCellBySqlQuery(sql);
+        throw new UnsupportedOperationException("This method isn't supported (cell can be fetched only by location).");
     }
 
     public DataCell get(Location location, long sheetId) {
@@ -63,10 +53,9 @@ public class DataCellDao implements Dao<DataCell> {
             ResultSet rs = statement.executeQuery(sql);
             while (rs.next()) {
                 cells.add(new DataCell(
-                        rs.getLong(1),
-                        new Location(rs.getLong(2), rs.getLong(3)),
-                        rs.getString(4),
-                        rs.getLong(5)));
+                        new Location(rs.getLong(1), rs.getLong(2)),
+                        rs.getString(3),
+                        rs.getLong(4)));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -83,22 +72,32 @@ public class DataCellDao implements Dao<DataCell> {
         return this.fetchCellsBySqlQuery("select * from " + DATA_CELLS_TABLE_NAME + " where sheet_id=" + sheetId);
     }
 
+    private void insertByQuery(String sql) {
+        try (Connection connection = DBCPDataSource.getInstance().getConnection()) {
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(sql);
+        } catch (SQLIntegrityConstraintViolationException e) {
+            System.out.println("Please provide a unique location for a sheet.");
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public void save(DataCell cell) {
-        // TODO check sheetId AND location for uniqueness (with another query?)
-        String params = cell.getId() + ", " +
-                cell.getLocation().getRowIndex() + ", " +
+        // TODO check that location exists (with a query to `sheets`)
+        String params = cell.getLocation().getRowIndex() + ", " +
                 cell.getLocation().getColumnIndex() + ", '" +
                 cell.getValue() + "', " +
                 cell.getSheetId();
         String sql = "insert into " + DATA_CELLS_TABLE_NAME + " values (" + params + ")";
-        try (Connection connection = DBCPDataSource.getInstance().getConnection()) {
-            Statement statement = connection.createStatement();
-            statement.executeUpdate(sql);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        this.insertByQuery(sql);
+    }
+
+    public void save(DataCell cell, long sheetId) {
+        // this.insertByQuery(sql);
+        throw new UnsupportedOperationException("This method isn't implemented yet");
     }
 
     @Override

@@ -4,24 +4,14 @@ import java.util.Objects;
 
 public class DataCell {
 
-    private Long id;
     private Long sheetId;
     private Location location;
     private String value;
 
-    public DataCell(Long id, Location location, String value, Long sheetId) {
-        this.id = id;
+    public DataCell(Location location, String value, Long sheetId) {
         this.location = location;
         this.value = value;
         this.sheetId = sheetId;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public Long getSheetId() {
@@ -65,8 +55,7 @@ public class DataCell {
     @Override
     public String toString() {
         return "DataCell{" +
-                "id=" + id +
-                ", sheetId=" + sheetId +
+                "sheetId=" + sheetId +
                 ", location=" + location +
                 ", value='" + value + '\'' +
                 '}';

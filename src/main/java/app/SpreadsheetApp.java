@@ -55,7 +55,7 @@ public class SpreadsheetApp {
         throw new UnsupportedOperationException("This method isn't implemented yet");
     }
 
-    public void addData(Map<Location, String> data) {
+    public void addData(Map<Location, String> data, Long sheetId) {
         throw new UnsupportedOperationException("This method isn't implemented yet");
     }
 
@@ -63,11 +63,7 @@ public class SpreadsheetApp {
             Location location,
             String value,
             Long sheetId) {
-        cellDao.save(new DataCell(ZERO_INDEX, location, value, sheetId));
-    }
-
-    public DataCell getData(long cellId) {
-        return cellDao.get(cellId);
+        cellDao.save(new DataCell(location, value, sheetId));
     }
 
     public List<DataCell> getAllData() {
@@ -104,10 +100,6 @@ public class SpreadsheetApp {
 
     public List<DataCell> getAllDataCellsOfSheet(long sheetId) {
         return cellDao.getAllFilteredBy(sheetId);
-    }
-
-    public DataCell getCellOfSheet(long cellId, long sheetId) {
-        return cellDao.get(cellId, sheetId);
     }
 
     public DataCell getCellOfSheet(Location location, long sheetId) {
