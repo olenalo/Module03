@@ -102,23 +102,23 @@ public class SpreadsheetApp {
         throw new UnsupportedOperationException("This method isn't implemented yet");
     }
 
-    public DataCell getDataOfSheet(long dataId, long sheetId) {
-        throw new UnsupportedOperationException("This method isn't implemented yet");
-    }
-
-    public List<DataCell> getDataOfSheet(long sheetId) {
+    public List<DataCell> getAllDataCellsOfSheet(long sheetId) {
         return cellDao.getAllFilteredBy(sheetId);
     }
 
-    public List<DataCell> getDataOfSheet(Location location, long sheetId) {
+    public DataCell getCellOfSheet(long cellId, long sheetId) {
+        return cellDao.get(cellId, sheetId);
+    }
+
+    public DataCell getCellOfSheet(Location location, long sheetId) {
+        return cellDao.get(location, sheetId);
+    }
+
+    public List<DataCell> getDataCellsOfSheet(Location from, Location to, long sheetId) {
         throw new UnsupportedOperationException("This method isn't implemented yet");
     }
 
-    public List<DataCell> getDataOfSheet(Location from, Location to, long sheetId) {
-        throw new UnsupportedOperationException("This method isn't implemented yet");
-    }
-
-    public List<DataCell> getDataOfSheet(Map<Location, String> data, long sheetId) {
+    public List<DataCell> getDataCellsOfSheet(Map<Location, String> data, long sheetId) {
         throw new UnsupportedOperationException("This method isn't implemented yet");
     }
 

@@ -16,9 +16,7 @@ public class DataCellDao implements Dao<DataCell> {
     public DataCellDao() {
     }
 
-    @Override
-    public DataCell get(long id) {
-        String sql = "select * from " + DATA_CELLS_TABLE_NAME + " where cell_id=" + id;
+    private DataCell fetchCellBySqlQuery(String sql) {
         DataCell cell = null;
         try (Connection connection = DBCPDataSource.getInstance().getConnection()) {
             Statement statement = connection.createStatement();
@@ -35,6 +33,27 @@ public class DataCellDao implements Dao<DataCell> {
             e.printStackTrace();
         }
         return cell;
+    }
+
+    @Override
+    public DataCell get(long id) {
+        String sql = "select * from " + DATA_CELLS_TABLE_NAME + " where cell_id=" + id;
+        return this.fetchCellBySqlQuery(sql);
+    }
+
+    public DataCell get(long cellId, long sheetId) {
+        String sql = "select * from " + DATA_CELLS_TABLE_NAME +
+                " where cell_id=" + cellId +
+                " and sheet_id=" + sheetId;
+        return this.fetchCellBySqlQuery(sql);
+    }
+
+    public DataCell get(Location location, long sheetId) {
+        String sql = "select * from " + DATA_CELLS_TABLE_NAME +
+                " where row_index=" + location.getRowIndex() +
+                " and column_index=" + location.getColumnIndex() +
+                " and sheet_id=" + sheetId;
+        return this.fetchCellBySqlQuery(sql);
     }
 
     private List<DataCell> fetchCellsBySqlQuery(String sql) {
@@ -67,6 +86,7 @@ public class DataCellDao implements Dao<DataCell> {
 
     @Override
     public void save(DataCell cell) {
+        // TODO check sheetId AND location for uniqueness (with another query?)
         String params = cell.getId() + ", " +
                 cell.getLocation().getRowIndex() + ", " +
                 cell.getLocation().getColumnIndex() + ", '" +
