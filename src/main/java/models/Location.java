@@ -25,4 +25,12 @@ public class Location {
     public void setColumnIndex(Long columnIndex) {
         this.columnIndex = columnIndex;
     }
+
+    @Override
+    public String toString() {
+        return "Location{" +
+                "rowIndex=" + rowIndex +
+                ", columnIndex=" + columnIndex +
+                '}';
+    }
 }

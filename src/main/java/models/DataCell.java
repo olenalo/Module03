@@ -1,18 +1,19 @@
 package models;
 
-import java.util.Map;
 import java.util.Objects;
-
-import static configs.MySQLConfigs.FIRST_DB_ENTRY_ID;
 
 public class DataCell {
 
     private Long id;
-    private Map<Location, String> data;
+    private Long sheetId;
+    private Location location;
+    private String value;
 
-    public DataCell(Map<Location, String> data) {
-        this.id = FIRST_DB_ENTRY_ID;
-        this.data = data;
+    public DataCell(Long id, Location location, String value, Long sheetId) {
+        this.id = id;
+        this.location = location;
+        this.value = value;
+        this.sheetId = sheetId;
     }
 
     public Long getId() {
@@ -23,12 +24,28 @@ public class DataCell {
         this.id = id;
     }
 
-    public Map<Location, String> getData() {
-        return data;
+    public Long getSheetId() {
+        return sheetId;
     }
 
-    public void setData(Map<Location, String> data) {
-        this.data = data;
+    public void setSheetId(Long sheetId) {
+        this.sheetId = sheetId;
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
     }
 
     @Override
@@ -36,11 +53,21 @@ public class DataCell {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         DataCell dataCell = (DataCell) o;
-        return data.equals(dataCell.data);
+        return sheetId.equals(dataCell.sheetId) &&
+                location.equals(dataCell.location);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(data);
+        return Objects.hash(sheetId, location);
+    }
+
+    @Override
+    public String toString() {
+        return "DataCell{" +
+                "sheetId=" + sheetId +
+                ", location=" + location +
+                ", value='" + value + '\'' +
+                '}';
     }
 }

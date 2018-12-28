@@ -14,18 +14,20 @@ create table myspreadsheet.sheets (
     primary key (sheet_id)
 );
 
-create table myspreadsheet.entries (
-    entry_id int(11) not null auto_increment,  
+create table myspreadsheet.cells (
+    cell_id int(11) not null auto_increment,  
     row_index int(11) not null,
     column_index int(11) not null,
     cell_value varchar(20),
     sheet_id int(11),
-    primary key (entry_id),
+    primary key (cell_id),
     foreign key (sheet_id) references myspreadsheet.sheets(sheet_id),
     unique (row_index),
     unique (column_index)
 );
 
+select * from myspreadsheet.sheets;
+select * from myspreadsheet.cells;
 
 
 # This part is not implemented within the module

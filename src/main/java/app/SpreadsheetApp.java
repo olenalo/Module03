@@ -1,34 +1,44 @@
 package app;
 
+import dao.DataCellDao;
 import dao.SheetDao;
+import models.DataCell;
 import models.Location;
 import models.Sheet;
 
 import java.util.List;
-import java.util.Map;
+
+import static configs.MySQLConfigs.ZERO_INDEX;
 
 public class SpreadsheetApp {
     private static SheetDao sheetDao = new SheetDao();
-    private static long sheetsCounter = 0;
+    private static DataCellDao cellDao = new DataCellDao();
 
     public static void addSheet() {
-        sheetDao.save(new Sheet(sheetsCounter));
-        sheetsCounter++;
+        sheetDao.save(new Sheet(ZERO_INDEX));
     }
-
 
     public static void removeSheet() {
-
-    }
-
-    public static void addData(Long sheetId, Map<Location, String> data) {
-
+        throw new UnsupportedOperationException("This method isn't implemented yet");
     }
 
     public static List<Sheet> getAllSheets() {
         return sheetDao.getAll();
     }
 
+    public static void addData(
+            Location location,
+            String value,
+            Long sheetId) {
+        cellDao.save(new DataCell(ZERO_INDEX, location, value, sheetId));
+    }
+
+    public static List<DataCell> getAllData() {
+        return cellDao.getAll();
+    }
+
+    // TODO getAllDataOfSheet()
+    // TODO addData()  // other signatures
     // TODO other CRUD methods go below
     // TODO renaming API (set spreadsheet and sheet name)
     // TODO create new sheet

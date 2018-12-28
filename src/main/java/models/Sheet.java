@@ -2,7 +2,6 @@ package models;
 
 import java.util.*;
 
-import static configs.MySQLConfigs.FIRST_DB_ENTRY_ID;
 import static configs.SpreadsheetConfigs.DEFAULT_SHEET_NAME;
 import static configs.SpreadsheetConfigs.DEFAULT_ROWS_NUMBER;
 import static configs.SpreadsheetConfigs.DEFAULT_COLUMNS_NUMBER;
@@ -14,7 +13,6 @@ public class Sheet {
     private Long rowsNumber;
     private Long columnsNumber;
     private Map<Location, String> entries;
-    // private List<DataCell> entries;
 
     /**
      * Initialize a sheet with a default entries.
@@ -86,10 +84,6 @@ public class Sheet {
         this.id = id;
     }
 
-    public Map<Location, String> getEntries() {
-        return entries;
-    }
-
     /**
      * Get a slice of the sheet data.
      *
@@ -103,7 +97,7 @@ public class Sheet {
     // TODO make it possible to add values of different types
 
     /**
-     * Add a single value to a cell (datum).
+     * Add a single value to a cell.
      *
      * @param location
      * @param value
@@ -140,12 +134,12 @@ public class Sheet {
     @Override
     public String toString() {
         return "Sheet{" +
-                "title='" + title + '\'' +
+                "id='" + id + '\'' +
+                ", title='" + title + '\'' +
                 ", rowsNumber=" + rowsNumber +
                 ", columnsNumber=" + columnsNumber +
                 '}';
     }
-
 
 
 }
