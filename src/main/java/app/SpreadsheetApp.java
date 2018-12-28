@@ -7,6 +7,7 @@ import models.Location;
 import models.Sheet;
 
 import java.util.List;
+import java.util.Map;
 
 import static configs.MySQLConfigs.ZERO_INDEX;
 
@@ -18,7 +19,23 @@ public class SpreadsheetApp {
         sheetDao.save(new Sheet(ZERO_INDEX));
     }
 
-    public static void removeSheet() {
+    public static void removeSheet(long sheetId) {
+        throw new UnsupportedOperationException("This method isn't implemented yet");
+    }
+
+    public static void removeRow(long sheetId) {
+        throw new UnsupportedOperationException("This method isn't implemented yet");
+    }
+
+    public static void removeRow(long sheetId, long rowNumber) {
+        throw new UnsupportedOperationException("This method isn't implemented yet");
+    }
+
+    public static void removeColumn(long sheetId) {
+        throw new UnsupportedOperationException("This method isn't implemented yet");
+    }
+
+    public static void removeColumn(long sheetId, long columnNumber) {
         throw new UnsupportedOperationException("This method isn't implemented yet");
     }
 
@@ -31,31 +48,78 @@ public class SpreadsheetApp {
     }
 
     public static void addData(
+            Location from,
+            Location to,
+            List<String> values,
+            Long sheetId) {
+        throw new UnsupportedOperationException("This method isn't implemented yet");
+    }
+
+    public static void addData(Map<Location, String> data) {
+        throw new UnsupportedOperationException("This method isn't implemented yet");
+    }
+
+    public static void addData(
             Location location,
             String value,
             Long sheetId) {
         cellDao.save(new DataCell(ZERO_INDEX, location, value, sheetId));
     }
 
-    public static DataCell getDatum(long id) {
-        return cellDao.get(id);
+    public static DataCell getData(long cellId) {
+        return cellDao.get(cellId);
     }
 
     public static List<DataCell> getAllData() {
         return cellDao.getAll();
     }
 
-    public static List<DataCell> getAllDataOfSheet(long sheetId) {
+    public static void removeData(Location location, long sheetId) {
+        throw new UnsupportedOperationException("This method isn't implemented yet");
+    }
+
+    public static void removeData(Location from, Location to, long sheetId) {
+        throw new UnsupportedOperationException("This method isn't implemented yet");
+    }
+
+    public static void removeData(Map<Location, String> data, long sheetId) {
+        throw new UnsupportedOperationException("This method isn't implemented yet");
+    }
+
+    public static void renameSheet(long sheetId, String newName) {
+        throw new UnsupportedOperationException("This method isn't implemented yet");
+    }
+
+    public static void updateData(Location location, long sheetId) {
+        throw new UnsupportedOperationException("This method isn't implemented yet");
+    }
+
+    public static void updateData(Location from, Location to, long sheetId) {
+        throw new UnsupportedOperationException("This method isn't implemented yet");
+    }
+
+    public static void updateData(Map<Location, String> data, long sheetId) {
+        throw new UnsupportedOperationException("This method isn't implemented yet");
+    }
+
+    public static DataCell getDataOfSheet(long dataId, long sheetId) {
+        throw new UnsupportedOperationException("This method isn't implemented yet");
+    }
+
+    public static List<DataCell> getDataOfSheet(long sheetId) {
         return cellDao.getAllFilteredBy(sheetId);
     }
 
-    // TODO get() datum of a particular sheet
-    // TODO remove sheet (table)
-    // TODO remove row/column
-    // TODO remove data (single, slice etc)
-    // TODO update - rename sheet (set custom sheet name)
-    // TODO update datum/data/slice of data
-    // TODO addData()  - other signatures (data, data slice)
-    // TODO get() data/data slice of a particular sheet
+    public static List<DataCell> getDataOfSheet(Location location, long sheetId) {
+        throw new UnsupportedOperationException("This method isn't implemented yet");
+    }
+
+    public static List<DataCell> getDataOfSheet(Location from, Location to, long sheetId) {
+        throw new UnsupportedOperationException("This method isn't implemented yet");
+    }
+
+    public static List<DataCell> getDataOfSheet(Map<Location, String> data, long sheetId) {
+        throw new UnsupportedOperationException("This method isn't implemented yet");
+    }
 
 }

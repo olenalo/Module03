@@ -35,13 +35,17 @@ public class Demo {
                 (long) 2);
 
         System.out.println("----------- Print the first datum -----------");
-        System.out.println(SpreadsheetApp.getDatum((long) 1));
+        System.out.println(SpreadsheetApp.getData((long) 1));
 
         System.out.println("----------- Print all data -----------");
         printCells(SpreadsheetApp.getAllData());
 
         System.out.println("----------- Print all data of the 1st sheet sheet -----------");
-        printCells(SpreadsheetApp.getAllDataOfSheet((long) 1));
+        printCells(SpreadsheetApp.getDataOfSheet((long) 1));
+
+        // System.out.println("----------- Print the first datum of the first sheet-----------");
+        // System.out.println(SpreadsheetApp.getDataOfSheet((long) 1, (long) 1));
+        // ...
 
     }
 

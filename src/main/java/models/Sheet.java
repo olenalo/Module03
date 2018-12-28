@@ -129,8 +129,6 @@ public class Sheet {
         // TODO fill in the data
     }
 
-    // TODO implement data removal
-
     @Override
     public String toString() {
         return "Sheet{" +
