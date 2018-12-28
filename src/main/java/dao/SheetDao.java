@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static configs.MySQLConfigs.SHEETS_TABLE_NAME;
+import static utilities.DaoUtilities.insertByQuery;
 
 public class SheetDao implements Dao<Sheet> {
 
@@ -21,6 +22,7 @@ public class SheetDao implements Dao<Sheet> {
     public Sheet get(long id) {
         String sql = "select * from " + SHEETS_TABLE_NAME + " where sheet_id=" + id;
         Sheet sheet = null;
+        // TODO consider moving the logic below to `DaoUtilities`
         try (Connection connection = DBCPDataSource.getInstance().getConnection()) {
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(sql);
@@ -41,6 +43,7 @@ public class SheetDao implements Dao<Sheet> {
     public List<Sheet> getAll() {
         String sql = "select * from " + SHEETS_TABLE_NAME;
         List<Sheet> sheets = new ArrayList<>();
+        // TODO consider moving the logic below to `DaoUtilities`
         try (Connection connection = DBCPDataSource.getInstance().getConnection()) {
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(sql);
@@ -59,14 +62,11 @@ public class SheetDao implements Dao<Sheet> {
 
     @Override
     public void save(Sheet sheet) {
-        String params = sheet.getId() + ", '" + sheet.getTitle() + "', " + sheet.getRowsNumber() + ", " + sheet.getColumnsNumber();
-        String sql = "insert into " + SHEETS_TABLE_NAME + " values (" + params + ")";
-        try (Connection connection = DBCPDataSource.getInstance().getConnection()) {
-            Statement statement = connection.createStatement();
-            statement.executeUpdate(sql);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        String params = sheet.getId() + ", '" +
+                sheet.getTitle() + "', " +
+                sheet.getRowsNumber() + ", " +
+                sheet.getColumnsNumber();
+        insertByQuery("insert into " + SHEETS_TABLE_NAME + " values (" + params + ")");
     }
 
     @Override
