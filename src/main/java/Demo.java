@@ -74,6 +74,11 @@ public class Demo {
         System.out.println("----------- Print all sheets again (after removal) -----------");
         printSheets(app.getAllSheets());
 
+        app.removeData(1);
+        System.out.println("----------- Print all data again (after removal) -----------");
+        printCells(app.getAllData());
+
+        System.out.println("----------- -----------");
     }
 
 }

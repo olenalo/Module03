@@ -82,7 +82,7 @@ public class SheetDao implements Dao<Sheet> {
 
     @Override
     public void delete(Sheet sheet) {
+        // On the app level, all its data is removed beforehand
         updateOrRemoveByQuery("delete from " + SHEETS_TABLE_NAME + " where sheet_id=" + sheet.getId());
-        // TODO remove all its data if any
     }
 }

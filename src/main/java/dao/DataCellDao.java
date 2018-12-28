@@ -6,7 +6,6 @@ import models.Location;
 import java.util.List;
 
 import static configs.MySQLConfigs.DATA_CELLS_TABLE_NAME;
-import static configs.MySQLConfigs.SHEETS_TABLE_NAME;
 import static utilities.DaoUtilities.*;
 import static utilities.DaoUtilities.updateOrRemoveByQuery;
 
@@ -55,6 +54,7 @@ public class DataCellDao implements Dao<DataCell> {
 
     @Override
     public void delete(DataCell cell) {
+        // TODO cover cases of removal by location (single datum / data slice)
         updateOrRemoveByQuery("delete from " + DATA_CELLS_TABLE_NAME + " where sheet_id=" + cell.getSheetId());
     }
 }

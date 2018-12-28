@@ -127,6 +127,10 @@ public class SpreadsheetApp {
         return cellDao.getAll();
     }
 
+    public void removeData(long sheetId) {
+        cellDao.delete(new DataCell(sheetId));
+    }
+
     public void removeData(Location location, long sheetId) {
         throw new UnsupportedOperationException("This method isn't implemented yet");
     }
