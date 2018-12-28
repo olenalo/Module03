@@ -6,7 +6,7 @@ public class DataCell {
 
     private Long sheetId;
     private Location location;
-    private String value;
+    private String value;  // TODO allow for creating values of different types
 
     public DataCell(Long sheetId) {
         this.sheetId = sheetId;

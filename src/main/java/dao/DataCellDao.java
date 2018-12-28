@@ -6,8 +6,10 @@ import models.Location;
 import java.util.List;
 
 import static configs.MySQLConfigs.DATA_CELLS_TABLE_NAME;
-import static utilities.DaoUtilities.*;
 import static utilities.DaoUtilities.updateOrRemoveByQuery;
+import static utilities.DaoUtilities.fetchCellBySqlQuery;
+import static utilities.DaoUtilities.fetchCellsBySqlQuery;
+import static utilities.DaoUtilities.insertByQuery;
 
 public class DataCellDao implements Dao<DataCell> {
 

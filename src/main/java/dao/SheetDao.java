@@ -2,16 +2,14 @@ package dao;
 
 import models.Location;
 import models.Sheet;
-import utilities.DBCPDataSource;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.List;
 
 import static configs.MySQLConfigs.SHEETS_TABLE_NAME;
-import static utilities.DaoUtilities.*;
+import static utilities.DaoUtilities.fetchSheetBySqlQuery;
+import static utilities.DaoUtilities.fetchSheetsBySqlQuery;
+import static utilities.DaoUtilities.insertByQuery;
+import static utilities.DaoUtilities.updateOrRemoveByQuery;
 
 public class SheetDao implements Dao<Sheet> {
 
@@ -20,24 +18,7 @@ public class SheetDao implements Dao<Sheet> {
 
     @Override
     public Sheet get(long id) {
-        String sql = "select * from " + SHEETS_TABLE_NAME + " where sheet_id=" + id;
-        Sheet sheet = null;
-        // TODO consider moving the logic below to `DaoUtilities`
-        try (Connection connection = DBCPDataSource.getInstance().getConnection()) {
-            Statement statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery(sql);
-            while (rs.next()) {
-                sheet = new Sheet(
-                        rs.getLong(1),
-                        rs.getString(2),
-                        rs.getLong(3),
-                        rs.getLong(4)
-                );
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return sheet;
+        return fetchSheetBySqlQuery("select * from " + SHEETS_TABLE_NAME + " where sheet_id=" + id);
     }
 
     @Override

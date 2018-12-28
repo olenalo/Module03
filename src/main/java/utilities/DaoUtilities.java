@@ -66,6 +66,25 @@ public class DaoUtilities {
         return cells;
     }
 
+    public static Sheet fetchSheetBySqlQuery(String sql) {
+        Sheet sheet = null;
+        try (Connection connection = DBCPDataSource.getInstance().getConnection()) {
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(sql);
+            while (rs.next()) {
+                sheet = new Sheet(
+                        rs.getLong(1),
+                        rs.getString(2),
+                        rs.getLong(3),
+                        rs.getLong(4)
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return sheet;
+    }
+
     public static List<Sheet> fetchSheetsBySqlQuery(String sql) {
         List<Sheet> sheets = new ArrayList<>();
         try (Connection connection = DBCPDataSource.getInstance().getConnection()) {
