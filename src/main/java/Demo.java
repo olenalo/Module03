@@ -8,14 +8,24 @@ public class Demo {
 
     public static void main(String[] args) {
         SpreadsheetApp app = new SpreadsheetApp();
+
         // Sheets
         // Add a new sheet (table)
         // Two of them will exist as one was added upon the app launch
         app.addSheet();
+
         app.addRow(1);
+        app.addRow(1);
+        // app.removeRow(1); // FIXME
+        // app.removeRows(1, 2); // FIXME
         app.addColumn(1);
+        app.addColumn(1);
+        // app.removeColumn(1); // FIXME
+
         app.addRows(2, 10);
         app.addColumns(2, 10);
+        // app.removeColumns(2, 2); // FIXME
+
         System.out.println("----------- Print the 1st sheet -----------");
         System.out.println(app.getSheet((long) 1));
         System.out.println("----------- Print the 2nd sheet -----------");

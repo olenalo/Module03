@@ -73,7 +73,7 @@ public class SheetDao implements Dao<Sheet> {
     @Override
     public void update(Sheet sheet, String[] params) {
         // TODO add params checks (naming, values)
-        // TODO add additional logic to checks (e.g. if `rows_number`, increment)
+        // TODO add additional logic to checks (e.g. if `rows_number` and positive value, increment, and decrement with negative value)
         // TODO format string with placeholders (here and in other places)
         updateByQuery("update " + SHEETS_TABLE_NAME +
                 " set " + params[0] + " = " + params[0] + " + " + params[1] +

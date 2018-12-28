@@ -27,43 +27,70 @@ public class SpreadsheetApp {
         throw new UnsupportedOperationException("This method isn't implemented yet");
     }
 
+    public void addRow(long sheetId, long rowIndex) {
+        // TODO permute
+        throw new UnsupportedOperationException("This method isn't implemented yet");
+    }
+
     public void addRow(long sheetId) {
         sheetDao.update(new Sheet(sheetId), new String[]{"rows_number", "1"});
     }
 
-    public void addRows(long sheetId, int rowsNumber) {
+    public void addRows(long sheetId, long rowsNumber) {
         sheetDao.update(new Sheet(sheetId), new String[]{"rows_number", String.valueOf(rowsNumber)});
+    }
+
+    public void addRows(long sheetId, long rowIndex, long rowsNumber) {
+        // TODO permute
+        throw new UnsupportedOperationException("This method isn't implemented yet");
     }
 
     public void addColumn(long sheetId) {
         sheetDao.update(new Sheet(sheetId), new String[]{"columns_number", "1"});
     }
 
-    public void addColumns(long sheetId, int columnsNumber) {
+    public void addColumn(long sheetId, long columnId) {
+        // TODO permute
+        throw new UnsupportedOperationException("This method isn't implemented yet");
+    }
+
+    public void addColumns(long sheetId, long columnsNumber) {
         sheetDao.update(new Sheet(sheetId), new String[]{"columns_number", String.valueOf(columnsNumber)});
     }
 
-    // TODO permute rows when adding or removing "middle" row
-
     public void removeRow(long sheetId) {
-        throw new UnsupportedOperationException("This method isn't implemented yet");
+        sheetDao.update(new Sheet(sheetId), new String[]{"columns_number", "-1"});
     }
 
     public void removeRow(long sheetId, long rowNumber) {
+        // TODO permute
         throw new UnsupportedOperationException("This method isn't implemented yet");
     }
 
-    public void addColumn() {
-        throw new UnsupportedOperationException("This method isn't implemented yet");
+    public void removeRows(long sheetId, long rowsNumber) {
+        sheetDao.update(new Sheet(sheetId), new String[]{"columns_number", String.valueOf(-rowsNumber)});
     }
 
-    // TODO permute columns when adding or removing "middle" column
+    public void removeRows(long sheetId, int rowIndex, long rowNumber) {
+        // TODO permute
+        throw new UnsupportedOperationException("This method isn't implemented yet");
+    }
 
     public void removeColumn(long sheetId) {
-        throw new UnsupportedOperationException("This method isn't implemented yet");
+        sheetDao.update(new Sheet(sheetId), new String[]{"columns_number", "-1"});
     }
 
     public void removeColumn(long sheetId, long columnNumber) {
+        // TODO permute
+        throw new UnsupportedOperationException("This method isn't implemented yet");
+    }
+
+    public void removeColumns(long sheetId, long columnsNumber) {
+        sheetDao.update(new Sheet(sheetId), new String[]{"columns_number", String.valueOf(columnsNumber)});
+    }
+
+    public void removeColumns(long sheetId, long columnIndex, long columnNumber) {
+        // TODO permute
         throw new UnsupportedOperationException("This method isn't implemented yet");
     }
 
