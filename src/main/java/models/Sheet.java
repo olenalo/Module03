@@ -8,6 +8,7 @@ public class Sheet {
 
     private Long id;
     private String title;
+    // Available rows and columns numbers (not necessarily filled in)
     private Long rowsNumber;
     private Long columnsNumber;
 

@@ -15,6 +15,10 @@ public class SpreadsheetApp {
     private SheetDao sheetDao = new SheetDao();
     private DataCellDao cellDao = new DataCellDao();
 
+    public SpreadsheetApp() {
+        this.addSheet(); // Default sheet is always created
+    }
+
     public void addSheet() {
         sheetDao.save(new Sheet(ZERO_INDEX));
     }

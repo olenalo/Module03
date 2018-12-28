@@ -10,11 +10,12 @@ public class Demo {
         SpreadsheetApp app = new SpreadsheetApp();
         // Sheets
         // Add a new sheet
-        app.addSheet(); // TODO consider moving one call to `SpreadsheetApp` (should happen at least once)
         app.addSheet();
 
         System.out.println("----------- Print the 1st sheet -----------");
         System.out.println(app.getSheet((long) 1));
+        System.out.println("----------- Print the 2nd sheet -----------");
+        System.out.println(app.getSheet((long) 2)); // two of them exist as one was added upon start
 
         System.out.println("----------- Print all sheets -----------");
         printSheets(app.getAllSheets());
