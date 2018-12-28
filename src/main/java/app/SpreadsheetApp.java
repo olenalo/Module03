@@ -27,6 +27,12 @@ public class SpreadsheetApp {
         throw new UnsupportedOperationException("This method isn't implemented yet");
     }
 
+    public void addRow() {
+        throw new UnsupportedOperationException("This method isn't implemented yet");
+    }
+
+    // TODO permute rows when adding or removing "middle" row
+
     public void removeRow(long sheetId) {
         throw new UnsupportedOperationException("This method isn't implemented yet");
     }
@@ -34,6 +40,12 @@ public class SpreadsheetApp {
     public void removeRow(long sheetId, long rowNumber) {
         throw new UnsupportedOperationException("This method isn't implemented yet");
     }
+
+    public void addColumn() {
+        throw new UnsupportedOperationException("This method isn't implemented yet");
+    }
+
+    // TODO permute columns when adding or removing "middle" column
 
     public void removeColumn(long sheetId) {
         throw new UnsupportedOperationException("This method isn't implemented yet");
