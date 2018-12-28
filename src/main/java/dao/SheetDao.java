@@ -22,34 +22,44 @@ public class SheetDao implements Dao<Sheet> {
         return null;
     }
 
-    @Override
     public List<Sheet> getAll() {
         String sql = "select * from " + SHEETS_TABLE_NAME;
-        List<Sheet> table = new ArrayList<>();
+        List<Sheet> sheets = new ArrayList<>();
         try (Connection connection = DBCPDataSource.getInstance().getConnection()) {
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(sql);
             while (rs.next()) {
-                // TODO implement
+                sheets.add(new Sheet(
+                        rs.getLong(1),
+                        rs.getString(2),
+                        rs.getLong(3),
+                        rs.getLong(4)));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return table;
+        return sheets;
     }
 
     @Override
-    public void save(Sheet spreadsheet) {
+    public void save(Sheet sheet) {
+        String params = sheet.getId() + ", '" + sheet.getTitle() + "', " + sheet.getRowsNumber() + ", " + sheet.getColumnsNumber();
+        String sql = "insert into " + SHEETS_TABLE_NAME + " values (" + params + ")";
+        try (Connection connection = DBCPDataSource.getInstance().getConnection()) {
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void update(Sheet sheet, String[] params) {
         throw new UnsupportedOperationException("This method isn't implemented yet");
     }
 
     @Override
-    public void update(Sheet spreadsheet, String[] params) {
-        throw new UnsupportedOperationException("This method isn't implemented yet");
-    }
-
-    @Override
-    public void delete(Sheet spreadsheet) {
+    public void delete(Sheet sheet) {
         throw new UnsupportedOperationException("This method isn't implemented yet");
     }
 }

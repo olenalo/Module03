@@ -2,24 +2,35 @@ package models;
 
 import java.util.*;
 
+import static configs.MySQLConfigs.FIRST_DB_ENTRY_ID;
 import static configs.SpreadsheetConfigs.DEFAULT_SHEET_NAME;
 import static configs.SpreadsheetConfigs.DEFAULT_ROWS_NUMBER;
 import static configs.SpreadsheetConfigs.DEFAULT_COLUMNS_NUMBER;
 
 public class Sheet {
 
-    private String sheetTitle;
+    private Long id;
+    private String title;
     private Long rowsNumber;
     private Long columnsNumber;
     private Map<Location, String> entries;
+    // private List<DataCell> entries;
 
     /**
      * Initialize a sheet with a default entries.
      */
-    public Sheet() {
+    public Sheet(Long id) {
+        this.id = id;
         this.entries = new HashMap<>();
         this.initializeDefaultSize();
-        this.sheetTitle = DEFAULT_SHEET_NAME;
+        this.title = DEFAULT_SHEET_NAME;
+    }
+
+    public Sheet(Long id, String title, Long rowsNumber, Long columnsNumber) {
+        this.id = id;
+        this.title = title;
+        this.rowsNumber = rowsNumber;
+        this.columnsNumber = columnsNumber;
     }
 
     public void initializeDefaultSize() {
@@ -43,12 +54,12 @@ public class Sheet {
         throw new UnsupportedOperationException("This method isn't implemented yet");
     }
 
-    public String getSheetTitle() {
-        return sheetTitle;
+    public String getTitle() {
+        return title;
     }
 
-    public void setSheetTitle(String sheetTitle) {
-        this.sheetTitle = sheetTitle;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public Long getRowsNumber() {
@@ -65,6 +76,14 @@ public class Sheet {
 
     public void setColumnsNumber(Long columnsNumber) {
         this.columnsNumber = columnsNumber;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Map<Location, String> getEntries() {
@@ -90,6 +109,7 @@ public class Sheet {
      * @param value
      */
     public void addData(Location location, String value) {
+        // TODO check location (no data can be added to non-existing cell)
         entries.put(location, value);
     }
 
@@ -115,6 +135,17 @@ public class Sheet {
         // TODO fill in the data
     }
 
-
     // TODO implement data removal
+
+    @Override
+    public String toString() {
+        return "Sheet{" +
+                "title='" + title + '\'' +
+                ", rowsNumber=" + rowsNumber +
+                ", columnsNumber=" + columnsNumber +
+                '}';
+    }
+
+
+
 }
