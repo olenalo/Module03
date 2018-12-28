@@ -27,8 +27,20 @@ public class SpreadsheetApp {
         throw new UnsupportedOperationException("This method isn't implemented yet");
     }
 
-    public void addRow() {
-        throw new UnsupportedOperationException("This method isn't implemented yet");
+    public void addRow(long sheetId) {
+        sheetDao.update(new Sheet(sheetId), new String[]{"rows_number", "1"});
+    }
+
+    public void addRows(long sheetId, int rowsNumber) {
+        sheetDao.update(new Sheet(sheetId), new String[]{"rows_number", String.valueOf(rowsNumber)});
+    }
+
+    public void addColumn(long sheetId) {
+        sheetDao.update(new Sheet(sheetId), new String[]{"columns_number", "1"});
+    }
+
+    public void addColumns(long sheetId, int columnsNumber) {
+        sheetDao.update(new Sheet(sheetId), new String[]{"columns_number", String.valueOf(columnsNumber)});
     }
 
     // TODO permute rows when adding or removing "middle" row

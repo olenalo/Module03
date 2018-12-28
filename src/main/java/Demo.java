@@ -9,13 +9,17 @@ public class Demo {
     public static void main(String[] args) {
         SpreadsheetApp app = new SpreadsheetApp();
         // Sheets
-        // Add a new sheet
+        // Add a new sheet (table)
+        // Two of them will exist as one was added upon the app launch
         app.addSheet();
-
+        app.addRow(1);
+        app.addColumn(1);
+        app.addRows(2, 10);
+        app.addColumns(2, 10);
         System.out.println("----------- Print the 1st sheet -----------");
         System.out.println(app.getSheet((long) 1));
         System.out.println("----------- Print the 2nd sheet -----------");
-        System.out.println(app.getSheet((long) 2)); // two of them exist as one was added upon start
+        System.out.println(app.getSheet((long) 2));
 
         System.out.println("----------- Print all sheets -----------");
         printSheets(app.getAllSheets());

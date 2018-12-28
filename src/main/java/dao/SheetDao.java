@@ -12,6 +12,7 @@ import java.util.List;
 
 import static configs.MySQLConfigs.SHEETS_TABLE_NAME;
 import static utilities.DaoUtilities.insertByQuery;
+import static utilities.DaoUtilities.updateByQuery;
 
 public class SheetDao implements Dao<Sheet> {
 
@@ -71,7 +72,12 @@ public class SheetDao implements Dao<Sheet> {
 
     @Override
     public void update(Sheet sheet, String[] params) {
-        throw new UnsupportedOperationException("This method isn't implemented yet");
+        // TODO add params checks (naming, values)
+        // TODO add additional logic to checks (e.g. if `rows_number`, increment)
+        // TODO format string with placeholders (here and in other places)
+        updateByQuery("update " + SHEETS_TABLE_NAME +
+                " set " + params[0] + " = " + params[0] + " + " + params[1] +
+                " where sheet_id = " + sheet.getId());
     }
 
     @Override

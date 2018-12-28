@@ -21,6 +21,15 @@ public class DaoUtilities {
         }
     }
 
+    public static void updateByQuery(String sql) {
+        try (Connection connection = DBCPDataSource.getInstance().getConnection()) {
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static DataCell fetchCellBySqlQuery(String sql) {
         DataCell cell = null;
         try (Connection connection = DBCPDataSource.getInstance().getConnection()) {
