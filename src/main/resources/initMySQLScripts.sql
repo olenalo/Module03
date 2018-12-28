@@ -24,6 +24,7 @@ create table myspreadsheet.cells (
     unique key sheet_id (sheet_id, row_index, column_index)
 );
 
+/*
 select * from myspreadsheet.sheets;
 select * from myspreadsheet.sheets where sheet_id=1;
 
@@ -35,7 +36,7 @@ select * from myspreadsheet.cells where sheet_id=2;
 
 # select * from myspreadsheet.cells where sheet_id=1 and cell_id=1;
 select * from myspreadsheet.cells where sheet_id=1 and row_index=0 and column_index=0;
-
+*/
 
 
 

@@ -122,7 +122,7 @@ public class SpreadsheetApp {
     public void addData(
             Location location,
             String value,
-            Long sheetId) {
+            long sheetId) {
         // Check that location exists
         if (!sheetDao.locationExists(location, sheetId)) {
             throw new IllegalArgumentException("Please provide the existing location.");

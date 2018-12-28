@@ -2,7 +2,7 @@
 
 This is an app reproducing basic spreadsheet functionality.
 
-Initial MySQL scripts for creating database and tables can be found in the `resources/` dir.
+Initial MySQL scripts for creating database and tables can be found in the `resources/` dir ([here](https://github.com/olenalo/Module03/blob/master/src/main/resources/initMySQLScripts.sql)).
 
 ## Design
 

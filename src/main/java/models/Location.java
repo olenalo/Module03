@@ -2,15 +2,15 @@ package models;
 
 public class Location {
 
-    private Long rowIndex;
-    private Long columnIndex;
+    private long rowIndex;
+    private long columnIndex;
 
-    public Location(Long rowIndex, Long columnIndex) {
+    public Location(long rowIndex, long columnIndex) {
         this.rowIndex = rowIndex;
         this.columnIndex = columnIndex;
     }
 
-    public Long getRowIndex() {
+    public long getRowIndex() {
         return rowIndex;
     }
 
@@ -18,11 +18,11 @@ public class Location {
         this.rowIndex = rowIndex;
     }
 
-    public Long getColumnIndex() {
+    public long getColumnIndex() {
         return columnIndex;
     }
 
-    public void setColumnIndex(Long columnIndex) {
+    public void setColumnIndex(long columnIndex) {
         this.columnIndex = columnIndex;
     }
 

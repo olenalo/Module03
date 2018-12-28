@@ -15,6 +15,6 @@ public class MySQLConfigs {
     public static final String DATA_CELLS_TABLE_NAME = "cells";
 
     // Misc
-    public static final long ZERO_INDEX = (long) 0;
+    public static final long ZERO_INDEX = 0;
 
 }

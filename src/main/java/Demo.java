@@ -29,9 +29,9 @@ public class Demo {
         // app.removeColumns(2, 2); // FIXME
 
         System.out.println("----------- Print the 1st sheet -----------");
-        System.out.println(app.getSheet((long) 1));
+        System.out.println(app.getSheet(1));
         System.out.println("----------- Print the 2nd sheet -----------");
-        System.out.println(app.getSheet((long) 2));
+        System.out.println(app.getSheet(2));
 
         System.out.println("----------- Print all sheets -----------");
         printSheets(app.getAllSheets());
@@ -39,40 +39,40 @@ public class Demo {
         // Entries
         // Add a single value to a cell
         app.addData(
-                new Location((long) 0, (long) 0),
+                new Location(0, 0),
                 "123",
-                (long) 1
+                1
         );
         app.addData(
-                new Location((long) 0, (long) 1),
+                new Location(0, 1),
                 "Some Value",
-                (long) 1
+                1
         );
         app.addData(
-                new Location((long) 0, (long) 0),
+                new Location(0, 0),
                 "123-568",
-                (long) 2
+                2
         );
         app.addData(
-                new Location((long) 1, (long) 1),
+                new Location(1, 1),
                 "123-56879 La la la",
-                (long) 2
+                2
         );
         // Check failure if adding with non-existing location
         /*
         app.addData(
-                new Location((long) 23, (long) 1123),
+                new Location(23, 1123),
                 "123-56879 La la la la la la",
-                (long) 2
+                2
         );
         */
 
         // Check failure if adding with non-unique location
         /*
         app.addData(
-                new Location((long) 1, (long) 1),
+                new Location(1, 1),
                 "123-56879 La la la",
-                (long) 2
+                2
         );
         */
 
@@ -80,10 +80,10 @@ public class Demo {
         printCells(app.getAllData());
 
         System.out.println("----------- Print all data of the 1st sheet sheet -----------");
-        printCells(app.getAllDataCellsOfSheet((long) 1));
+        printCells(app.getAllDataCellsOfSheet(1));
 
         System.out.println("----------- Print the datum of the first sheet by location-----------");
-        System.out.println(app.getCellOfSheet(new Location((long) 0, (long) 0), (long) 1));
+        System.out.println(app.getCellOfSheet(new Location(0, 0), 1));
 
         app.removeSheet(2); // ensure all data is removed from `cells` (it is, otherwise getting constraint violation exception)
         System.out.println("----------- Print all sheets again (after removal) -----------");
