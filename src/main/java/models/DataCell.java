@@ -65,7 +65,8 @@ public class DataCell {
     @Override
     public String toString() {
         return "DataCell{" +
-                "sheetId=" + sheetId +
+                "id=" + id +
+                ", sheetId=" + sheetId +
                 ", location=" + location +
                 ", value='" + value + '\'' +
                 '}';

@@ -2,6 +2,7 @@ package dao;
 
 import models.DataCell;
 import models.Location;
+import models.Sheet;
 import utilities.DBCPDataSource;
 
 import java.sql.*;
@@ -17,7 +18,23 @@ public class DataCellDao implements Dao<DataCell> {
 
     @Override
     public DataCell get(long id) {
-        throw new UnsupportedOperationException("This method isn't implemented yet");
+        String sql = "select * from " + DATA_CELLS_TABLE_NAME + " where cell_id=" + id;
+        DataCell cell = null;
+        try (Connection connection = DBCPDataSource.getInstance().getConnection()) {
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(sql);
+            while (rs.next()) {
+                cell = new DataCell(
+                        rs.getLong(1),
+                        new Location(rs.getLong(2), rs.getLong(3)),
+                        rs.getString(4),
+                        rs.getLong(5)
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return cell;
     }
 
     private List<DataCell> fetchCellsBySqlQuery(String sql) {

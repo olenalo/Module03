@@ -25,7 +25,11 @@ create table myspreadsheet.cells (
 );
 
 select * from myspreadsheet.sheets;
+select * from myspreadsheet.sheets where sheet_id=1;
+
 select * from myspreadsheet.cells;
+select * from myspreadsheet.cells where cell_id=1;
+
 select * from myspreadsheet.cells where sheet_id=1;
 select * from myspreadsheet.cells where sheet_id=2;
 

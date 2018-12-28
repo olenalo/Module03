@@ -19,7 +19,23 @@ public class SheetDao implements Dao<Sheet> {
 
     @Override
     public Sheet get(long id) {
-        return null;
+        String sql = "select * from " + SHEETS_TABLE_NAME + " where sheet_id=" + id;
+        Sheet sheet = null;
+        try (Connection connection = DBCPDataSource.getInstance().getConnection()) {
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(sql);
+            while (rs.next()) {
+                sheet = new Sheet(
+                        rs.getLong(1),
+                        rs.getString(2),
+                        rs.getLong(3),
+                        rs.getLong(4)
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return sheet;
     }
 
     public List<Sheet> getAll() {

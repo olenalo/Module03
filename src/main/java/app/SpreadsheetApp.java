@@ -22,6 +22,10 @@ public class SpreadsheetApp {
         throw new UnsupportedOperationException("This method isn't implemented yet");
     }
 
+    public static Sheet getSheet(long id) {
+        return sheetDao.get(id);
+    }
+
     public static List<Sheet> getAllSheets() {
         return sheetDao.getAll();
     }
@@ -31,6 +35,10 @@ public class SpreadsheetApp {
             String value,
             Long sheetId) {
         cellDao.save(new DataCell(ZERO_INDEX, location, value, sheetId));
+    }
+
+    public static DataCell getDatum(long id) {
+        return cellDao.get(id);
     }
 
     public static List<DataCell> getAllData() {

@@ -11,8 +11,11 @@ public class Demo {
         // Add a new sheet
         SpreadsheetApp.addSheet(); // TODO consider moving one call to `SpreadsheetApp` (should happen at least once)
         SpreadsheetApp.addSheet();
-        // Print all sheets
-        System.out.println("----------------------------");
+
+        System.out.println("----------- Print the 1st sheet -----------");
+        System.out.println(SpreadsheetApp.getSheet((long) 1));
+        
+        System.out.println("----------- Print all sheets -----------");
         printSheets(SpreadsheetApp.getAllSheets());
 
         // Entries
@@ -30,12 +33,14 @@ public class Demo {
                 new Location((long) 0, (long) 0),
                 "123-568",
                 (long) 2);
-        // Print all data
-        System.out.println("----------------------------");
+
+        System.out.println("----------- Print the first datum -----------");
+        System.out.println(SpreadsheetApp.getDatum((long) 1));
+
+        System.out.println("----------- Print all data -----------");
         printCells(SpreadsheetApp.getAllData());
 
-        // Print all data of a sheet
-        System.out.println("----------------------------");
+        System.out.println("----------- Print all data of the 1st sheet sheet -----------");
         printCells(SpreadsheetApp.getAllDataOfSheet((long) 1));
 
     }
