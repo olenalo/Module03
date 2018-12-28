@@ -33,6 +33,7 @@ public class Demo {
                 (long) 1
         );
         // TODO check failure if adding with non-existing location
+        // TODO check failure if adding with non-unique location
         app.addData(
                 new Location((long) 0, (long) 0),
                 "123-568",
