@@ -8,6 +8,10 @@ public class DataCell {
     private Location location;
     private String value;
 
+    public DataCell(Long sheetId) {
+        this.sheetId = sheetId;
+    }
+
     public DataCell(Location location, String value, Long sheetId) {
         this.location = location;
         this.value = value;

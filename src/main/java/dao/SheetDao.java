@@ -12,7 +12,7 @@ import java.util.List;
 
 import static configs.MySQLConfigs.SHEETS_TABLE_NAME;
 import static utilities.DaoUtilities.insertByQuery;
-import static utilities.DaoUtilities.updateByQuery;
+import static utilities.DaoUtilities.updateOrRemoveByQuery;
 
 public class SheetDao implements Dao<Sheet> {
 
@@ -75,13 +75,14 @@ public class SheetDao implements Dao<Sheet> {
         // TODO add params checks (naming, values)
         // TODO add additional logic to checks (e.g. if `rows_number` and positive value, increment, and decrement with negative value)
         // TODO format string with placeholders (here and in other places)
-        updateByQuery("update " + SHEETS_TABLE_NAME +
+        updateOrRemoveByQuery("update " + SHEETS_TABLE_NAME +
                 " set " + params[0] + " = " + params[0] + " + " + params[1] +
                 " where sheet_id = " + sheet.getId());
     }
 
     @Override
     public void delete(Sheet sheet) {
-        throw new UnsupportedOperationException("This method isn't implemented yet");
+        updateOrRemoveByQuery("delete from " + SHEETS_TABLE_NAME + " where sheet_id=" + sheet.getId());
+        // TODO remove all its data if any
     }
 }

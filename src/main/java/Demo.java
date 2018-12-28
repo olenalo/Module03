@@ -13,6 +13,8 @@ public class Demo {
         // Add a new sheet (table)
         // Two of them will exist as one was added upon the app launch
         app.addSheet();
+        app.addSheet();
+        app.removeSheet(3);
 
         app.addRow(1);
         app.addRow(1);
@@ -67,6 +69,10 @@ public class Demo {
 
         System.out.println("----------- Print the datum of the first sheet by location-----------");
         System.out.println(app.getCellOfSheet(new Location((long) 0, (long) 0), (long) 1));
+
+        app.removeSheet(2); // ensure all data is removed from `cells` (it is, otherwise getting constraint violation exception)
+        System.out.println("----------- Print all sheets again (after removal) -----------");
+        printSheets(app.getAllSheets());
 
     }
 

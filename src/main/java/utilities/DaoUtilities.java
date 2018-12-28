@@ -21,7 +21,7 @@ public class DaoUtilities {
         }
     }
 
-    public static void updateByQuery(String sql) {
+    public static void updateOrRemoveByQuery(String sql) {
         try (Connection connection = DBCPDataSource.getInstance().getConnection()) {
             Statement statement = connection.createStatement();
             statement.executeUpdate(sql);

@@ -24,7 +24,9 @@ public class SpreadsheetApp {
     }
 
     public void removeSheet(long sheetId) {
-        throw new UnsupportedOperationException("This method isn't implemented yet");
+        // First, remove all sheet's data if any to meet constraint reqs
+        cellDao.delete(new DataCell(sheetId));
+        sheetDao.delete(new Sheet(sheetId));
     }
 
     public void addRow(long sheetId, long rowIndex) {
