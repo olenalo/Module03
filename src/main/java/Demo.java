@@ -48,8 +48,6 @@ public class Demo {
                 "Some Value",
                 (long) 1
         );
-        // TODO check failure if adding with non-existing location
-        // TODO check failure if adding with non-unique location
         app.addData(
                 new Location((long) 0, (long) 0),
                 "123-568",
@@ -60,6 +58,23 @@ public class Demo {
                 "123-56879 La la la",
                 (long) 2
         );
+        // Check failure if adding with non-existing location
+        /*
+        app.addData(
+                new Location((long) 23, (long) 1123),
+                "123-56879 La la la la la la",
+                (long) 2
+        );
+        */
+
+        // Check failure if adding with non-unique location
+        /*
+        app.addData(
+                new Location((long) 1, (long) 1),
+                "123-56879 La la la",
+                (long) 2
+        );
+        */
 
         System.out.println("----------- Print all data -----------");
         printCells(app.getAllData());

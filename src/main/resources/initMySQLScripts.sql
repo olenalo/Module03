@@ -1,4 +1,3 @@
-# drop database spreadsheets;
 # drop database myspreadsheet;
 
 
@@ -43,6 +42,8 @@ select * from myspreadsheet.cells where sheet_id=1 and row_index=0 and column_in
 
 # This part is not implemented within the module
 # (API: add/remove new spreadsheet...)
+
+# drop database spreadsheets;
 
 /*
 create database spreadsheets;

@@ -2,6 +2,7 @@ package utilities;
 
 import models.DataCell;
 import models.Location;
+import models.Sheet;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -63,6 +64,24 @@ public class DaoUtilities {
             e.printStackTrace();
         }
         return cells;
+    }
+
+    public static List<Sheet> fetchSheetsBySqlQuery(String sql) {
+        List<Sheet> sheets = new ArrayList<>();
+        try (Connection connection = DBCPDataSource.getInstance().getConnection()) {
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(sql);
+            while (rs.next()) {
+                sheets.add(new Sheet(
+                        rs.getLong(1),
+                        rs.getString(2),
+                        rs.getLong(3),
+                        rs.getLong(4)));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return sheets;
     }
 
 }

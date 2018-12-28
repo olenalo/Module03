@@ -110,10 +110,12 @@ public class SpreadsheetApp {
             Location to,
             List<String> values,
             Long sheetId) {
+        // TODO check that location exists
         throw new UnsupportedOperationException("This method isn't implemented yet");
     }
 
     public void addData(Map<Location, String> data, Long sheetId) {
+        // TODO check that location exists
         throw new UnsupportedOperationException("This method isn't implemented yet");
     }
 
@@ -121,6 +123,10 @@ public class SpreadsheetApp {
             Location location,
             String value,
             Long sheetId) {
+        // Check that location exists
+        if (!sheetDao.locationExists(location, sheetId)) {
+            throw new IllegalArgumentException("Please provide the existing location.");
+        }
         cellDao.save(new DataCell(location, value, sheetId));
     }
 

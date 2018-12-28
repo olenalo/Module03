@@ -1,5 +1,6 @@
 package dao;
 
+import models.Location;
 import models.Sheet;
 import utilities.DBCPDataSource;
 
@@ -7,12 +8,10 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.List;
 
 import static configs.MySQLConfigs.SHEETS_TABLE_NAME;
-import static utilities.DaoUtilities.insertByQuery;
-import static utilities.DaoUtilities.updateOrRemoveByQuery;
+import static utilities.DaoUtilities.*;
 
 public class SheetDao implements Dao<Sheet> {
 
@@ -41,24 +40,16 @@ public class SheetDao implements Dao<Sheet> {
         return sheet;
     }
 
+    @Override
     public List<Sheet> getAll() {
-        String sql = "select * from " + SHEETS_TABLE_NAME;
-        List<Sheet> sheets = new ArrayList<>();
-        // TODO consider moving the logic below to `DaoUtilities`
-        try (Connection connection = DBCPDataSource.getInstance().getConnection()) {
-            Statement statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery(sql);
-            while (rs.next()) {
-                sheets.add(new Sheet(
-                        rs.getLong(1),
-                        rs.getString(2),
-                        rs.getLong(3),
-                        rs.getLong(4)));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return sheets;
+        return fetchSheetsBySqlQuery("select * from " + SHEETS_TABLE_NAME);
+    }
+
+    public boolean locationExists(Location location, long sheetId) {
+        Sheet sheet = this.get(sheetId);
+        long rowsNumber = sheet.getRowsNumber();
+        long columnsNumber = sheet.getColumnsNumber();
+        return location.getRowIndex() <= rowsNumber && location.getColumnIndex() <= columnsNumber;
     }
 
     @Override

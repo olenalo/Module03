@@ -38,7 +38,6 @@ public class DataCellDao implements Dao<DataCell> {
 
     @Override
     public void save(DataCell cell) {
-        // TODO check that location exists (with a query to `sheets`)
         String params = cell.getLocation().getRowIndex() + ", " +
                 cell.getLocation().getColumnIndex() + ", '" +
                 cell.getValue() + "', " +
