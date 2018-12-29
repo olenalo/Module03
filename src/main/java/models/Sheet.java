@@ -15,20 +15,20 @@ public class Sheet {
     /**
      * Initialize a sheet with a default entries.
      */
-    public Sheet(Long id) {
+    public Sheet(long id) {
         this.id = id;
         this.initializeDefaultSize();
         this.title = DEFAULT_SHEET_NAME; // TODO make it unique for each sheet
     }
 
-    public Sheet(Long id, String title, Long rowsNumber, Long columnsNumber) {
+    public Sheet(long id, String title, long rowsNumber, long columnsNumber) {
         this.id = id;
         this.title = title;
         this.rowsNumber = rowsNumber;
         this.columnsNumber = columnsNumber;
     }
 
-    public void initializeDefaultSize() {
+    private void initializeDefaultSize() {
         this.rowsNumber = DEFAULT_ROWS_NUMBER;
         this.columnsNumber = DEFAULT_COLUMNS_NUMBER;
     }
@@ -57,27 +57,27 @@ public class Sheet {
         this.title = title;
     }
 
-    public Long getRowsNumber() {
+    public long getRowsNumber() {
         return rowsNumber;
     }
 
-    public void setRowsNumber(Long rowsNumber) {
+    public void setRowsNumber(long rowsNumber) {
         this.rowsNumber = rowsNumber;
     }
 
-    public Long getColumnsNumber() {
+    public long getColumnsNumber() {
         return columnsNumber;
     }
 
-    public void setColumnsNumber(Long columnsNumber) {
+    public void setColumnsNumber(long columnsNumber) {
         this.columnsNumber = columnsNumber;
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 

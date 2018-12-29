@@ -5,6 +5,7 @@ import dao.SheetDao;
 import models.DataCell;
 import models.Location;
 import models.Sheet;
+import utilities.DBCPDataSource;
 
 import java.util.List;
 import java.util.Map;
@@ -12,8 +13,8 @@ import java.util.Map;
 import static configs.MySQLConfigs.ZERO_INDEX;
 
 public class SpreadsheetApp {
-    private SheetDao sheetDao = new SheetDao();
-    private DataCellDao cellDao = new DataCellDao();
+    private SheetDao sheetDao = new SheetDao(DBCPDataSource.getInstance());
+    private DataCellDao cellDao = new DataCellDao(DBCPDataSource.getInstance());
 
     public SpreadsheetApp() {
         // TODO consider removing (sheet's created on s higher level, i.e. upon spreadsheet creation)
@@ -31,7 +32,7 @@ public class SpreadsheetApp {
     }
 
     public void addRow(long sheetId, long rowIndex) {
-        // TODO permute
+        // TODO move existing rows (with new row in the middle)
         throw new UnsupportedOperationException("This method isn't implemented yet");
     }
 
@@ -44,7 +45,7 @@ public class SpreadsheetApp {
     }
 
     public void addRows(long sheetId, long rowIndex, long rowsNumber) {
-        // TODO permute
+        // TODO move existing rows (with new row in the middle)
         throw new UnsupportedOperationException("This method isn't implemented yet");
     }
 
@@ -53,7 +54,7 @@ public class SpreadsheetApp {
     }
 
     public void addColumn(long sheetId, long columnId) {
-        // TODO permute
+        // TODO move existing columns (with new column in the middle)
         throw new UnsupportedOperationException("This method isn't implemented yet");
     }
 
@@ -62,29 +63,32 @@ public class SpreadsheetApp {
     }
 
     public void removeRow(long sheetId) {
+        // FIXME
         sheetDao.update(new Sheet(sheetId), new String[]{"columns_number", "-1"});
     }
 
     public void removeRow(long sheetId, long rowNumber) {
-        // TODO permute
+        // TODO move existing rows (with new row in the middle)
         throw new UnsupportedOperationException("This method isn't implemented yet");
     }
 
     public void removeRows(long sheetId, long rowsNumber) {
+        // FIXME
         sheetDao.update(new Sheet(sheetId), new String[]{"columns_number", String.valueOf(-rowsNumber)});
     }
 
     public void removeRows(long sheetId, int rowIndex, long rowNumber) {
-        // TODO permute
+        // TODO move existing rows (with new row in the middle)
         throw new UnsupportedOperationException("This method isn't implemented yet");
     }
 
     public void removeColumn(long sheetId) {
+        // FIXME
         sheetDao.update(new Sheet(sheetId), new String[]{"columns_number", "-1"});
     }
 
     public void removeColumn(long sheetId, long columnNumber) {
-        // TODO permute
+        // TODO move existing columns (with new column in the middle)
         throw new UnsupportedOperationException("This method isn't implemented yet");
     }
 
@@ -93,7 +97,7 @@ public class SpreadsheetApp {
     }
 
     public void removeColumns(long sheetId, long columnIndex, long columnNumber) {
-        // TODO permute
+        // TODO move existing columns (with new column in the middle)
         throw new UnsupportedOperationException("This method isn't implemented yet");
     }
 
