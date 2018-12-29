@@ -59,7 +59,6 @@ public class CellDao implements Dao<Cell> {
             Statement statement = connection.createStatement();
             statement.executeUpdate(sql);
         } catch (SQLIntegrityConstraintViolationException e) {
-            // TODO move, this only concerns `Cell`
             System.out.println("Please provide a unique location for a sheet.");
             e.printStackTrace();
         } catch (SQLException e) {
@@ -83,6 +82,9 @@ public class CellDao implements Dao<Cell> {
     }
 
     public Cell get(Location location, long sheetId) {
+        if (location == null) {
+            throw new IllegalArgumentException("Please provide a Location object.");
+        }
         String sql = "select * from " + DATA_CELLS_TABLE_NAME +
                 " where row_index=" + location.getRowIndex() +
                 " and column_index=" + location.getColumnIndex() +
@@ -114,11 +116,17 @@ public class CellDao implements Dao<Cell> {
 
     @Override
     public void update(Cell cell, String[] params) {
+        if (cell == null) {
+            throw new IllegalArgumentException("Please provide a Cell object.");
+        }
         throw new UnsupportedOperationException("This method isn't implemented yet");
     }
 
     @Override
     public void delete(Cell cell) {
+        if (cell == null) {
+            throw new IllegalArgumentException("Please provide a Cell object.");
+        }
         // TODO cover cases of removal by location (single datum / data slice)
         updateOrRemoveByQuery("delete from " + DATA_CELLS_TABLE_NAME + " where sheet_id=" + cell.getSheetId());
     }
