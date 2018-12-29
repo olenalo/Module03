@@ -15,4 +15,4 @@ Initial MySQL scripts for creating database and tables can be found in the `reso
 (here - `myspreadsheet`) or document. 
 *Only the second part is implemented within this module as per initial requirements (add/remove table/row/column).*
 
-* A user can not add data to a non-existing cell, need to first add row(s) and column(s) to a entry.
+* A user can not add data to a non-existing cell, need to first add row(s) and column(s) to an entry.
