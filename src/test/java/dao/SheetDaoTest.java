@@ -19,11 +19,15 @@ import static org.mockito.Mockito.when;
 
 /**
  * Ensure <code>SheetDao</code> objects are created properly.
+ * <p>
+ * Also, check business logic here, e.g. input checks.
  */
 @RunWith(MockitoJUnitRunner.class)
 public class SheetDaoTest {
 
     private Sheet sheet;
+    @Mock
+    private SheetDao sheetDaoMock; // Needed for some tests
     @Mock
     private Connection connection;
     @Mock
@@ -58,7 +62,7 @@ public class SheetDaoTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void nullSaveThrowsException() {
+    public void testSaveFailureIfNoSheetProvided() {
         new SheetDao(ds).save(null);
     }
 
@@ -67,30 +71,35 @@ public class SheetDaoTest {
         new SheetDao(ds).save(sheet);
     }
 
-
     @Test
-    public void testSaveAndGetSheet() {
+    public void testSaveAndGetSheetSuccess() {
         SheetDao dao = new SheetDao(ds);
         dao.save(sheet);
         Sheet testSheet = dao.get(0);
+        // TODO discuss the weird thing: forced me to override equals method for this test to pass
         assertEquals(sheet, testSheet);
     }
 
-    @Test
-    public void testLocationExistsSuccess() {
-        // TODO
-        assertTrue(true);
-    }
-
-    /**
-     * Check failure if id of a non-existing sheet is provided.
-     */
-    // TODO
-    /*
     @Test(expected = IllegalArgumentException.class)
-    public void testLocationExistsFailureIfNonExistingSheetId() {
-
+    public void testLocationExistsFailureIfNoLocProvided() {
+        new SheetDao(ds).locationExists(null, 1);
     }
-    */
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testLocationExistsFailureIfNoSheetExists() {
+        sheetDaoMock = mock(SheetDao.class);
+        when(sheetDaoMock.get(2)).thenReturn(null);
+        new SheetDao(ds).locationExists(null, 2);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testDeleteFailureIfNoSheetProvided() {
+        new SheetDao(ds).delete(null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testUpdateFailureIfNoSheetProvided() {
+        new SheetDao(ds).update(null, new String[]{"rows_number", "1"});
+    }
 
 }

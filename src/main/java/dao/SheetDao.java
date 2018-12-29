@@ -85,6 +85,9 @@ public class SheetDao implements Dao<Sheet> {
     }
 
     public boolean locationExists(Location location, long sheetId) {
+        if (location == null) {
+            throw new IllegalArgumentException("Please provide a Location object.");
+        }
         Sheet sheet = this.get(sheetId);
         if (sheet == null) {
             throw new IllegalArgumentException("Please provide the id of an existing sheet.");
@@ -108,6 +111,9 @@ public class SheetDao implements Dao<Sheet> {
 
     @Override
     public void update(Sheet sheet, String[] params) {
+        if (sheet == null) {
+            throw new IllegalArgumentException("Please provide a Sheet object.");
+        }
         // TODO add params checks (naming, values)
         // TODO add additional logic to checks (e.g. if `rows_number` and positive value, increment, and decrement with negative value)
         // TODO format string with placeholders (here and in other places)
@@ -118,6 +124,9 @@ public class SheetDao implements Dao<Sheet> {
 
     @Override
     public void delete(Sheet sheet) {
+        if (sheet == null) {
+            throw new IllegalArgumentException("Please provide a Sheet object.");
+        }
         // On the app level, all its data is removed beforehand
         updateOrRemoveByQuery("delete from " + SHEETS_TABLE_NAME + " where sheet_id=" + sheet.getId());
     }
