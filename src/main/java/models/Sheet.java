@@ -1,5 +1,7 @@
 package models;
 
+import java.util.Objects;
+
 import static configs.SpreadsheetConfigs.DEFAULT_SHEET_NAME;
 import static configs.SpreadsheetConfigs.DEFAULT_ROWS_NUMBER;
 import static configs.SpreadsheetConfigs.DEFAULT_COLUMNS_NUMBER;
@@ -91,5 +93,19 @@ public class Sheet {
                 '}';
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Sheet)) return false;
+        Sheet sheet = (Sheet) o;
+        return id.equals(sheet.id) &&
+                title.equals(sheet.title) &&
+                rowsNumber.equals(sheet.rowsNumber) &&
+                columnsNumber.equals(sheet.columnsNumber);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, title, rowsNumber, columnsNumber);
+    }
 }

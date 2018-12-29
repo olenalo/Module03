@@ -35,7 +35,7 @@ public class SheetDaoTest {
 
     @Before
     public void setUp() throws Exception {
-        sheet = new Sheet(1, "test_title", 2, 2);
+        sheet = new Sheet(0, "test_title", 2, 2);
 
         resultSet = mock(ResultSet.class);
         when(resultSet.next()).thenReturn(true)
@@ -43,10 +43,10 @@ public class SheetDaoTest {
                 .thenReturn(true)
                 .thenReturn(true)
                 .thenReturn(false);
-        when(resultSet.getString(1)).thenReturn("1");
+        when(resultSet.getLong(1)).thenReturn((long) 0);
         when(resultSet.getString(2)).thenReturn("test_title");
-        when(resultSet.getString(3)).thenReturn("2");
-        when(resultSet.getString(4)).thenReturn("2");
+        when(resultSet.getLong(3)).thenReturn((long) 2);
+        when(resultSet.getLong(4)).thenReturn((long) 2);
 
         statement = mock(Statement.class);
         when(statement.executeQuery(any(String.class)))
@@ -72,9 +72,8 @@ public class SheetDaoTest {
     public void testSaveAndGetSheet() {
         SheetDao dao = new SheetDao(ds);
         dao.save(sheet);
-        Sheet sh = dao.get(0);
-        // FIXME
-        // assertEquals(sheet, sh);
+        Sheet testSheet = dao.get(0);
+        assertEquals(sheet, testSheet);
     }
 
     @Test
