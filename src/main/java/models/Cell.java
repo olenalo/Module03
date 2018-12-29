@@ -2,17 +2,17 @@ package models;
 
 import java.util.Objects;
 
-public class DataCell {
+public class Cell {
 
     private Long sheetId;
     private Location location;
     private String value;  // TODO allow for creating values of different types
 
-    public DataCell(Long sheetId) {
+    public Cell(Long sheetId) {
         this.sheetId = sheetId;
     }
 
-    public DataCell(Location location, String value, Long sheetId) {
+    public Cell(Location location, String value, Long sheetId) {
         this.location = location;
         this.value = value;
         this.sheetId = sheetId;
@@ -46,9 +46,9 @@ public class DataCell {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        DataCell dataCell = (DataCell) o;
-        return sheetId.equals(dataCell.sheetId) &&
-                location.equals(dataCell.location);
+        Cell cell = (Cell) o;
+        return sheetId.equals(cell.sheetId) &&
+                location.equals(cell.location);
     }
 
     @Override
@@ -58,7 +58,7 @@ public class DataCell {
 
     @Override
     public String toString() {
-        return "DataCell{" +
+        return "Cell{" +
                 "sheetId=" + sheetId +
                 ", location=" + location +
                 ", value='" + value + '\'' +

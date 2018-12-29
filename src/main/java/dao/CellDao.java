@@ -1,6 +1,6 @@
 package dao;
 
-import models.DataCell;
+import models.Cell;
 import models.Location;
 import utilities.DBCPDataSource;
 
@@ -10,22 +10,22 @@ import java.util.List;
 
 import static configs.MySQLConfigs.DATA_CELLS_TABLE_NAME;
 
-public class DataCellDao implements Dao<DataCell> {
+public class CellDao implements Dao<Cell> {
     // TODO use `PreparedStatement`
 
     private DBCPDataSource dataSource;
 
-    public DataCellDao(DBCPDataSource dataSource) {
+    public CellDao(DBCPDataSource dataSource) {
         this.dataSource = dataSource;
     }
 
-    private List<DataCell> fetchCellsBySqlQuery(String sql) {
-        List<DataCell> cells = new ArrayList<>();
+    private List<Cell> fetchCellsBySqlQuery(String sql) {
+        List<Cell> cells = new ArrayList<>();
         try (Connection connection = dataSource.getConnection()) {
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(sql);
             while (rs.next()) {
-                cells.add(new DataCell(
+                cells.add(new Cell(
                         new Location(rs.getLong(1), rs.getLong(2)),
                         rs.getString(3),
                         rs.getLong(4)));
@@ -36,13 +36,13 @@ public class DataCellDao implements Dao<DataCell> {
         return cells;
     }
 
-    private DataCell fetchCellBySqlQuery(String sql) {
-        DataCell cell = null;
+    private Cell fetchCellBySqlQuery(String sql) {
+        Cell cell = null;
         try (Connection connection = dataSource.getConnection()) {
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(sql);
             while (rs.next()) {
-                cell = new DataCell(
+                cell = new Cell(
                         new Location(rs.getLong(1), rs.getLong(2)),
                         rs.getString(3),
                         rs.getLong(4)
@@ -59,7 +59,7 @@ public class DataCellDao implements Dao<DataCell> {
             Statement statement = connection.createStatement();
             statement.executeUpdate(sql);
         } catch (SQLIntegrityConstraintViolationException e) {
-            // TODO move, this only concerns `DataCell`
+            // TODO move, this only concerns `Cell`
             System.out.println("Please provide a unique location for a sheet.");
             e.printStackTrace();
         } catch (SQLException e) {
@@ -77,12 +77,12 @@ public class DataCellDao implements Dao<DataCell> {
     }
 
     @Override
-    public DataCell get(long id) {
+    public Cell get(long id) {
         throw new UnsupportedOperationException("This method isn't supported " +
                 "(a cell can be fetched only by location).");
     }
 
-    public DataCell get(Location location, long sheetId) {
+    public Cell get(Location location, long sheetId) {
         String sql = "select * from " + DATA_CELLS_TABLE_NAME +
                 " where row_index=" + location.getRowIndex() +
                 " and column_index=" + location.getColumnIndex() +
@@ -91,18 +91,18 @@ public class DataCellDao implements Dao<DataCell> {
     }
 
     @Override
-    public List<DataCell> getAll() {
+    public List<Cell> getAll() {
         return fetchCellsBySqlQuery("select * from " + DATA_CELLS_TABLE_NAME);
     }
 
-    public List<DataCell> getAllFilteredBy(long sheetId) {
+    public List<Cell> getAllFilteredBy(long sheetId) {
         return fetchCellsBySqlQuery("select * from " + DATA_CELLS_TABLE_NAME + " where sheet_id=" + sheetId);
     }
 
     @Override
-    public void save(DataCell cell) {
+    public void save(Cell cell) {
         if (cell == null) {
-            throw new IllegalArgumentException("Please provide a DataCell object.");
+            throw new IllegalArgumentException("Please provide a Cell object.");
         }
         String params = cell.getLocation().getRowIndex() + ", " +
                 cell.getLocation().getColumnIndex() + ", '" +
@@ -113,12 +113,12 @@ public class DataCellDao implements Dao<DataCell> {
     }
 
     @Override
-    public void update(DataCell cell, String[] params) {
+    public void update(Cell cell, String[] params) {
         throw new UnsupportedOperationException("This method isn't implemented yet");
     }
 
     @Override
-    public void delete(DataCell cell) {
+    public void delete(Cell cell) {
         // TODO cover cases of removal by location (single datum / data slice)
         updateOrRemoveByQuery("delete from " + DATA_CELLS_TABLE_NAME + " where sheet_id=" + cell.getSheetId());
     }

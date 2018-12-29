@@ -1,8 +1,8 @@
 package app;
 
-import dao.DataCellDao;
+import dao.CellDao;
 import dao.SheetDao;
-import models.DataCell;
+import models.Cell;
 import models.Location;
 import models.Sheet;
 import utilities.DBCPDataSource;
@@ -14,7 +14,7 @@ import static configs.MySQLConfigs.ZERO_INDEX;
 
 public class SpreadsheetApp {
     private SheetDao sheetDao = new SheetDao(DBCPDataSource.getInstance());
-    private DataCellDao cellDao = new DataCellDao(DBCPDataSource.getInstance());
+    private CellDao cellDao = new CellDao(DBCPDataSource.getInstance());
 
     public SpreadsheetApp() {
         // TODO consider removing (sheet's created on s higher level, i.e. upon spreadsheet creation)
@@ -27,7 +27,7 @@ public class SpreadsheetApp {
 
     public void removeSheet(long sheetId) {
         // First, remove all sheet's data if any to meet constraint reqs
-        cellDao.delete(new DataCell(sheetId));
+        cellDao.delete(new Cell(sheetId));
         sheetDao.delete(new Sheet(sheetId));
     }
 
@@ -131,15 +131,15 @@ public class SpreadsheetApp {
         if (!sheetDao.locationExists(location, sheetId)) {
             throw new IllegalArgumentException("Please provide the existing location.");
         }
-        cellDao.save(new DataCell(location, value, sheetId));
+        cellDao.save(new Cell(location, value, sheetId));
     }
 
-    public List<DataCell> getAllData() {
+    public List<Cell> getAllData() {
         return cellDao.getAll();
     }
 
     public void removeData(long sheetId) {
-        cellDao.delete(new DataCell(sheetId));
+        cellDao.delete(new Cell(sheetId));
     }
 
     public void removeData(Location location, long sheetId) {
@@ -170,19 +170,19 @@ public class SpreadsheetApp {
         throw new UnsupportedOperationException("This method isn't implemented yet");
     }
 
-    public List<DataCell> getAllDataCellsOfSheet(long sheetId) {
+    public List<Cell> getAllDataCellsOfSheet(long sheetId) {
         return cellDao.getAllFilteredBy(sheetId);
     }
 
-    public DataCell getCellOfSheet(Location location, long sheetId) {
+    public Cell getCellOfSheet(Location location, long sheetId) {
         return cellDao.get(location, sheetId);
     }
 
-    public List<DataCell> getDataCellsOfSheet(Location from, Location to, long sheetId) {
+    public List<Cell> getDataCellsOfSheet(Location from, Location to, long sheetId) {
         throw new UnsupportedOperationException("This method isn't implemented yet");
     }
 
-    public List<DataCell> getDataCellsOfSheet(Map<Location, String> data, long sheetId) {
+    public List<Cell> getDataCellsOfSheet(Map<Location, String> data, long sheetId) {
         throw new UnsupportedOperationException("This method isn't implemented yet");
     }
 

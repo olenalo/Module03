@@ -1,6 +1,6 @@
 package utilities;
 
-import models.DataCell;
+import models.Cell;
 import models.Sheet;
 
 import java.util.List;
@@ -13,8 +13,8 @@ public class PrintUtils {
         }
     }
 
-    public static void printCells(List<DataCell> cells) {
-        for (DataCell cell : cells) {
+    public static void printCells(List<Cell> cells) {
+        for (Cell cell : cells) {
             System.out.println(cell);
         }
     }
