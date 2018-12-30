@@ -62,6 +62,11 @@ public class SheetDaoTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
+    public void testDaoInitFailureIfNullDataSource() {
+        new CellDao(null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
     public void testSaveFailureIfNoSheetProvided() {
         new SheetDao(ds).save(null);
     }
@@ -76,7 +81,7 @@ public class SheetDaoTest {
         SheetDao dao = new SheetDao(ds);
         dao.save(sheet);
         Sheet testSheet = dao.get(0);
-        // TODO discuss the weird thing: forced me to override equals method for this test to pass
+        // TODO discuss the weird thing: had to override equals() for this test to pass
         assertEquals(sheet, testSheet);
     }
 

@@ -16,6 +16,9 @@ public class SheetDao implements Dao<Sheet> {
     private DBCPDataSource dataSource;
 
     public SheetDao(DBCPDataSource dataSource) {
+        if (dataSource == null) {
+            throw new IllegalArgumentException("Data source must not be null.");
+        }
         this.dataSource = dataSource;
     }
 

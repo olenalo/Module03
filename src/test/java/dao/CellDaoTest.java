@@ -61,6 +61,11 @@ public class CellDaoTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
+    public void testDaoInitFailureIfNullDataSource() {
+        new CellDao(null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
     public void testSaveFailureIfNoSheetProvided() {
         new CellDao(ds).save(null);
     }

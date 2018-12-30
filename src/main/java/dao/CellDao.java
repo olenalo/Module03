@@ -16,6 +16,9 @@ public class CellDao implements Dao<Cell> {
     private DBCPDataSource dataSource;
 
     public CellDao(DBCPDataSource dataSource) {
+        if (dataSource == null) {
+            throw new IllegalArgumentException("Data source must not be null.");
+        }
         this.dataSource = dataSource;
     }
 
