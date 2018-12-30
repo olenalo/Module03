@@ -1,6 +1,8 @@
 import app.SpreadsheetApp;
+import models.Cell;
 import models.Location;
 
+import static configs.MySQLConfigs.CELL_VALUE_FIELD;
 import static utilities.PrintUtils.printCells;
 import static utilities.PrintUtils.printSheets;
 
@@ -77,8 +79,26 @@ public class Demo {
         );
         */
 
+
         System.out.println("----------- Print all data -----------");
         printCells(app.getAllData());
+
+        app.updateData(new Cell(new Location(1, 1), 2),
+                new String[]{CELL_VALUE_FIELD, "New Value"});
+        System.out.println("----------- Print all data again (after the change) -----------");
+        printCells(app.getAllData());
+
+        // Check failure if updating at non-existing location
+        /*
+        app.updateData(new Cell(new Location(23, 123), 2),
+                new String[]{CELL_VALUE_FIELD, "New Value"});
+        */
+
+        // Check failure if updating at non-existing sheet
+        /*
+        app.updateData(new Cell(new Location(1, 1), 2222),
+                new String[]{CELL_VALUE_FIELD, "New Value"});
+        */
 
         System.out.println("----------- Print all data of the 1st sheet sheet -----------");
         printCells(app.getAllDataCellsOfSheet(1));

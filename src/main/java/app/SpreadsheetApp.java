@@ -134,6 +134,14 @@ public class SpreadsheetApp {
         cellDao.save(new Cell(location, value, sheetId));
     }
 
+    public void updateData(Cell cell, String[] params) {
+        // Check that location exists
+        if (!sheetDao.locationExists(cell.getLocation(), cell.getSheetId())) {
+            throw new IllegalArgumentException("Please provide the existing location.");
+        }
+        cellDao.update(cell, params);
+    }
+
     public List<Cell> getAllData() {
         return cellDao.getAll();
     }

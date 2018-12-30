@@ -20,7 +20,7 @@ public class MySQLConfigs {
             ROWS_NUMBER_FIELD,
             TITLE_FIELD};
 
-    public static final String DATA_CELLS_TABLE_NAME = "cells";
+    public static final String CELLS_TABLE_NAME = "cells";
     public static final String ROW_INDEX_FIELD = "row_index";
     public static final String COLUMN_INDEX_FIELD = "column_index";
     public static final String CELL_VALUE_FIELD = "cell_value";

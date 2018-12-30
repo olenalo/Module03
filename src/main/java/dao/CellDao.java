@@ -2,13 +2,14 @@ package dao;
 
 import models.Cell;
 import models.Location;
+import org.apache.commons.lang3.ArrayUtils;
 import utilities.DBCPDataSource;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static configs.MySQLConfigs.DATA_CELLS_TABLE_NAME;
+import static configs.MySQLConfigs.*;
 
 public class CellDao implements Dao<Cell> {
     // TODO use `PreparedStatement`
@@ -75,6 +76,9 @@ public class CellDao implements Dao<Cell> {
         try (Connection connection = dataSource.getConnection()) {
             Statement statement = connection.createStatement();
             statement.executeUpdate(sql);
+        } catch (SQLIntegrityConstraintViolationException e) {
+            System.out.println("Please provide a unique cell location.");
+            e.printStackTrace();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -90,7 +94,7 @@ public class CellDao implements Dao<Cell> {
         if (location == null) {
             throw new IllegalArgumentException("Please provide a Location object.");
         }
-        String sql = "select * from " + DATA_CELLS_TABLE_NAME +
+        String sql = "select * from " + CELLS_TABLE_NAME +
                 " where row_index=" + location.getRowIndex() +
                 " and column_index=" + location.getColumnIndex() +
                 " and sheet_id=" + sheetId;
@@ -99,11 +103,11 @@ public class CellDao implements Dao<Cell> {
 
     @Override
     public List<Cell> getAll() {
-        return fetchCellsBySqlQuery("select * from " + DATA_CELLS_TABLE_NAME);
+        return fetchCellsBySqlQuery("select * from " + CELLS_TABLE_NAME);
     }
 
     public List<Cell> getAllFilteredBy(long sheetId) {
-        return fetchCellsBySqlQuery("select * from " + DATA_CELLS_TABLE_NAME + " where sheet_id=" + sheetId);
+        return fetchCellsBySqlQuery("select * from " + CELLS_TABLE_NAME + " where sheet_id=" + sheetId);
     }
 
     @Override
@@ -115,7 +119,7 @@ public class CellDao implements Dao<Cell> {
                 cell.getLocation().getColumnIndex() + ", '" +
                 cell.getValue() + "', " +
                 cell.getSheetId();
-        String sql = "insert into " + DATA_CELLS_TABLE_NAME + " values (" + params + ")";
+        String sql = "insert into " + CELLS_TABLE_NAME + " values (" + params + ")";
         insertByQuery(sql);
     }
 
@@ -124,8 +128,17 @@ public class CellDao implements Dao<Cell> {
         if (cell == null) {
             throw new IllegalArgumentException("Please provide a Cell object.");
         }
-        // TODO implement
-        throw new UnsupportedOperationException("This method isn't implemented yet");
+        if (!ArrayUtils.contains(CELLS_ALLOWED_MODIFIABLE_FIELDS, params[0])) {
+            throw new IllegalArgumentException("Please provide a valid cells table field name as the first param.");
+        }
+        // Note: Incrementing and decrementing could be possible
+        //  once values of different types can be provided
+        String sql = "update " + CELLS_TABLE_NAME +
+                " set " + params[0] + " = '" + params[1] + "'" +
+                " where sheet_id = " + cell.getSheetId() +
+                " and row_index = " + cell.getLocation().getRowIndex() +
+                " and column_index = " + cell.getLocation().getColumnIndex();
+        updateOrRemoveByQuery(sql);
     }
 
     @Override
@@ -134,6 +147,6 @@ public class CellDao implements Dao<Cell> {
             throw new IllegalArgumentException("Please provide a Cell object.");
         }
         // TODO consider covering cases of removal by location (single datum / data slice)
-        updateOrRemoveByQuery("delete from " + DATA_CELLS_TABLE_NAME + " where sheet_id=" + cell.getSheetId());
+        updateOrRemoveByQuery("delete from " + CELLS_TABLE_NAME + " where sheet_id=" + cell.getSheetId());
     }
 }

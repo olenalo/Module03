@@ -37,6 +37,12 @@ select * from myspreadsheet.cells where sheet_id=1 and row_index=0 and column_in
 
 update myspreadsheet.sheets set columns_number = columns_number - 1 where sheet_id = 1;
 select * from myspreadsheet.sheets;
+
+update myspreadsheet.cells 
+set cell_value = 'New Value' 
+where sheet_id = 2 
+and row_index = 1 
+and column_index = 1;
 */
 
 
