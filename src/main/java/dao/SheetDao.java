@@ -2,17 +2,19 @@ package dao;
 
 import models.Location;
 import models.Sheet;
+import org.apache.commons.lang3.ArrayUtils;
 import utilities.DBCPDataSource;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-import static configs.MySQLConfigs.SHEETS_TABLE_NAME;
+import static configs.MySQLConfigs.*;
 
 public class SheetDao implements Dao<Sheet> {
     // TODO use `PreparedStatement`
-    // TODO format sql string with placeholders
+    // TODO consider formatting sql queries strings with placeholders
 
     private DBCPDataSource dataSource;
 
@@ -113,24 +115,37 @@ public class SheetDao implements Dao<Sheet> {
         insertByQuery("insert into " + SHEETS_TABLE_NAME + " values (" + params + ")");
     }
 
+    private String prepareUpdateQuery(String[] params) {
+        String sql = null;
+        if (params[0].equals(ROWS_NUMBER_FIELD) || params[0].equals(COLUMNS_NUMBER_FIELD)) {
+            String sign;
+            if (params[1].contains("-")) {
+                sign = "";
+            } else {
+                sign = " + ";
+            }
+            sql = "update " + SHEETS_TABLE_NAME +
+                    " set " + params[0] + " = " + params[0] + sign + params[1];
+
+        } else if (params[0].equals(TITLE_FIELD)) {
+            sql = "update " + SHEETS_TABLE_NAME +
+                    " set " + params[0] + " = '" + params[1] + "'";
+        }
+        return sql;
+    }
+
     @Override
     public void update(Sheet sheet, String[] params) {
         if (sheet == null) {
             throw new IllegalArgumentException("Please provide a Sheet object.");
         }
-        // TODO add params checks (allowed naming, values)
-        // TODO add additional logic to checks, e.g.
-        //  - if `title`, rename a sheet.
-        String sign;
-        if (params[1].contains("-")) {
-            sign = "";
-        } else {
-            sign = " + ";
+        if (!ArrayUtils.contains(SHEETS_ALLOWED_MODIFIABLE_FIELDS, params[0])) {
+            throw new IllegalArgumentException("Please provide a valid sheets table field name as the first param.");
         }
-        String sql = "update " + SHEETS_TABLE_NAME +
-                " set " + params[0] + " = " + params[0] + sign + params[1] +
-                " where sheet_id = " + sheet.getId();
-        updateOrRemoveByQuery(sql);
+        String sql = prepareUpdateQuery(params) + " where sheet_id = " + sheet.getId();
+        if (sql != null) {
+            updateOrRemoveByQuery(sql);
+        }  // TODO consider: should we raise an exception if null?
     }
 
     @Override

@@ -11,6 +11,9 @@ import java.util.List;
 import java.util.Map;
 
 import static configs.MySQLConfigs.ZERO_INDEX;
+import static configs.MySQLConfigs.COLUMNS_NUMBER_FIELD;
+import static configs.MySQLConfigs.ROWS_NUMBER_FIELD;
+import static configs.MySQLConfigs.TITLE_FIELD;
 
 public class SpreadsheetApp {
     private SheetDao sheetDao = new SheetDao(DBCPDataSource.getInstance());
@@ -37,11 +40,11 @@ public class SpreadsheetApp {
     }
 
     public void addRow(long sheetId) {
-        sheetDao.update(new Sheet(sheetId), new String[]{"rows_number", "1"});
+        sheetDao.update(new Sheet(sheetId), new String[]{ROWS_NUMBER_FIELD, "1"});
     }
 
     public void addRows(long sheetId, long rowsNumber) {
-        sheetDao.update(new Sheet(sheetId), new String[]{"rows_number", String.valueOf(rowsNumber)});
+        sheetDao.update(new Sheet(sheetId), new String[]{ROWS_NUMBER_FIELD, String.valueOf(rowsNumber)});
     }
 
     public void addRows(long sheetId, long rowIndex, long rowsNumber) {
@@ -50,7 +53,7 @@ public class SpreadsheetApp {
     }
 
     public void addColumn(long sheetId) {
-        sheetDao.update(new Sheet(sheetId), new String[]{"columns_number", "1"});
+        sheetDao.update(new Sheet(sheetId), new String[]{COLUMNS_NUMBER_FIELD, "1"});
     }
 
     public void addColumn(long sheetId, long columnId) {
@@ -59,11 +62,11 @@ public class SpreadsheetApp {
     }
 
     public void addColumns(long sheetId, long columnsNumber) {
-        sheetDao.update(new Sheet(sheetId), new String[]{"columns_number", String.valueOf(columnsNumber)});
+        sheetDao.update(new Sheet(sheetId), new String[]{COLUMNS_NUMBER_FIELD, String.valueOf(columnsNumber)});
     }
 
     public void removeRow(long sheetId) {
-        sheetDao.update(new Sheet(sheetId), new String[]{"rows_number", "-1"});
+        sheetDao.update(new Sheet(sheetId), new String[]{ROWS_NUMBER_FIELD, "-1"});
     }
 
     public void removeRow(long sheetId, long rowNumber) {
@@ -72,7 +75,7 @@ public class SpreadsheetApp {
     }
 
     public void removeRows(long sheetId, long rowsNumber) {
-        sheetDao.update(new Sheet(sheetId), new String[]{"rows_number", String.valueOf(-rowsNumber)});
+        sheetDao.update(new Sheet(sheetId), new String[]{ROWS_NUMBER_FIELD, String.valueOf(-rowsNumber)});
     }
 
     public void removeRows(long sheetId, int rowIndex, long rowNumber) {
@@ -81,7 +84,7 @@ public class SpreadsheetApp {
     }
 
     public void removeColumn(long sheetId) {
-        sheetDao.update(new Sheet(sheetId), new String[]{"columns_number", "-1"});
+        sheetDao.update(new Sheet(sheetId), new String[]{COLUMNS_NUMBER_FIELD, "-1"});
     }
 
     public void removeColumn(long sheetId, long columnNumber) {
@@ -90,7 +93,7 @@ public class SpreadsheetApp {
     }
 
     public void removeColumns(long sheetId, long columnsNumber) {
-        sheetDao.update(new Sheet(sheetId), new String[]{"columns_number", String.valueOf(-columnsNumber)});
+        sheetDao.update(new Sheet(sheetId), new String[]{COLUMNS_NUMBER_FIELD, String.valueOf(-columnsNumber)});
     }
 
     public void removeColumns(long sheetId, long columnIndex, long columnNumber) {
@@ -116,7 +119,7 @@ public class SpreadsheetApp {
     }
 
     public void addData(Map<Location, String> data, Long sheetId) {
-        // TODO check that location exists
+        // TODO check that locations exist
         throw new UnsupportedOperationException("This method isn't implemented yet");
     }
 
@@ -152,7 +155,7 @@ public class SpreadsheetApp {
     }
 
     public void renameSheet(long sheetId, String newName) {
-        throw new UnsupportedOperationException("This method isn't implemented yet");
+        sheetDao.update(new Sheet(sheetId), new String[]{TITLE_FIELD, newName});
     }
 
     public void updateData(Location location, long sheetId) {

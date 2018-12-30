@@ -12,7 +12,7 @@ import static configs.MySQLConfigs.DATA_CELLS_TABLE_NAME;
 
 public class CellDao implements Dao<Cell> {
     // TODO use `PreparedStatement`
-    // TODO format sql string with placeholders
+    // TODO consider formatting sql queries strings with placeholders
 
     private DBCPDataSource dataSource;
 
@@ -132,7 +132,7 @@ public class CellDao implements Dao<Cell> {
         if (cell == null) {
             throw new IllegalArgumentException("Please provide a Cell object.");
         }
-        // TODO cover cases of removal by location (single datum / data slice)
+        // TODO consider covering cases of removal by location (single datum / data slice)
         updateOrRemoveByQuery("delete from " + DATA_CELLS_TABLE_NAME + " where sheet_id=" + cell.getSheetId());
     }
 }

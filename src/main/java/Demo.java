@@ -23,6 +23,7 @@ public class Demo {
         app.addColumn(1);
         app.addColumn(1);
         app.removeColumn(1);
+        app.renameSheet(1, "MyFirstSheet");
 
         app.addRows(2, 10);
         app.addColumns(2, 10);
