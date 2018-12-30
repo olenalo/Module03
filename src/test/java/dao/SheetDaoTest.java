@@ -2,6 +2,7 @@ package dao;
 
 import models.Sheet;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -9,13 +10,15 @@ import org.mockito.runners.MockitoJUnitRunner;
 import utilities.DBCPDataSource;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
 
+import static configs.MySQLConfigs.COLUMNS_NUMBER_FIELD;
+import static configs.MySQLConfigs.ROWS_NUMBER_FIELD;
+import static configs.MySQLConfigs.TITLE_FIELD;
 import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 /**
  * Ensure <code>SheetDao</code> objects are created properly.
@@ -27,13 +30,13 @@ public class SheetDaoTest {
 
     private Sheet sheet;
     @Mock
-    private SheetDao sheetDaoMock; // Needed for some tests
+    private SheetDao daoMock; // Needed for some tests
     @Mock
     private Connection connection;
     @Mock
     private DBCPDataSource ds;
     @Mock
-    private Statement statement;
+    private PreparedStatement statement;
     @Mock
     private ResultSet resultSet;
 
@@ -52,13 +55,17 @@ public class SheetDaoTest {
         when(resultSet.getLong(3)).thenReturn((long) 2);
         when(resultSet.getLong(4)).thenReturn((long) 2);
 
-        statement = mock(Statement.class);
-        when(statement.executeQuery(any(String.class)))
-                .thenReturn(resultSet);
-
         ds = mock(DBCPDataSource.class);
         when(ds.getConnection()).thenReturn(connection);
-        when(connection.createStatement()).thenReturn(statement);
+
+        statement = mock(PreparedStatement.class);
+        when(connection.prepareStatement(any(String.class))).thenReturn(statement);
+        when(statement.executeQuery()).thenReturn(resultSet);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testDaoInitFailureIfNullDataSource() {
+        new CellDao(null);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -76,7 +83,7 @@ public class SheetDaoTest {
         SheetDao dao = new SheetDao(ds);
         dao.save(sheet);
         Sheet testSheet = dao.get(0);
-        // TODO discuss the weird thing: forced me to override equals method for this test to pass
+        // TODO discuss the weird thing: had to override equals() for this test to pass
         assertEquals(sheet, testSheet);
     }
 
@@ -87,8 +94,8 @@ public class SheetDaoTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testLocationExistsFailureIfNoSheetExists() {
-        sheetDaoMock = mock(SheetDao.class);
-        when(sheetDaoMock.get(2)).thenReturn(null);
+        daoMock = mock(SheetDao.class);
+        when(daoMock.get(2)).thenReturn(null);
         new SheetDao(ds).locationExists(null, 2);
     }
 
@@ -99,7 +106,38 @@ public class SheetDaoTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testUpdateFailureIfNoSheetProvided() {
-        new SheetDao(ds).update(null, new String[]{"rows_number", "1"});
+        new SheetDao(ds).update(null, new String[]{ROWS_NUMBER_FIELD, "1"});
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testUpdateFailureIfNoSqlProvided() {
+        new SheetDao(ds).update(null, new String[]{ROWS_NUMBER_FIELD, "1"});
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testUpdateFailureIfIllegalParamProvided() {
+        new SheetDao(ds).update(sheet, new String[]{"illegal_param", "1"});
+    }
+
+    @Ignore("Skip till figure out a way to mock dao update() expectations (probably need to refactor the logic")
+    @Test
+    public void testUpdateRowsNumberSuccess() {
+        daoMock.update(sheet, new String[]{ROWS_NUMBER_FIELD, "1"});
+        // verify(daoMock, times(1)).updateOrRemoveByQuery(any(String.class));
+    }
+
+    @Ignore("Skip till figure out a way to mock dao update() expectations (probably need to refactor the logic")
+    @Test
+    public void testUpdateColumnsNumberSuccess() {
+        daoMock.update(sheet, new String[]{COLUMNS_NUMBER_FIELD, "1"});
+        // verify(daoMock, times(1)).updateOrRemoveByQuery(any(String.class));
+    }
+
+    @Ignore("Skip till figure out a way to mock dao update() expectations (probably need to refactor the logic")
+    @Test
+    public void testUpdateTitleSuccess() {
+        daoMock.update(sheet, new String[]{TITLE_FIELD, "title"});
+        // verify(daoMock, times(1)).updateOrRemoveByQuery(any(String.class));
     }
 
 }

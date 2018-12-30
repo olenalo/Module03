@@ -3,6 +3,7 @@ package dao;
 import models.Cell;
 import models.Location;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -10,13 +11,13 @@ import org.mockito.runners.MockitoJUnitRunner;
 import utilities.DBCPDataSource;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
 
-import static org.junit.Assert.assertEquals;
+import static configs.MySQLConfigs.*;
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.times;
 
 /**
  * Ensure <code>CellDao</code> objects are created properly.
@@ -28,11 +29,13 @@ public class CellDaoTest {
 
     private Cell cell;
     @Mock
+    private CellDao daoMock; // Needed for some tests
+    @Mock
     private Connection connection;
     @Mock
     private DBCPDataSource ds;
     @Mock
-    private Statement statement;
+    private PreparedStatement statement;
     @Mock
     private ResultSet resultSet;
 
@@ -51,13 +54,17 @@ public class CellDaoTest {
         when(resultSet.getString(3)).thenReturn("test value");
         when(resultSet.getLong(4)).thenReturn((long) 0);
 
-        statement = mock(Statement.class);
-        when(statement.executeQuery(any(String.class)))
-                .thenReturn(resultSet);
-
         ds = mock(DBCPDataSource.class);
         when(ds.getConnection()).thenReturn(connection);
-        when(connection.createStatement()).thenReturn(statement);
+
+        statement = mock(PreparedStatement.class);
+        when(connection.prepareStatement(any(String.class))).thenReturn(statement);
+        when(statement.executeQuery()).thenReturn(resultSet);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testDaoInitFailureIfNullDataSource() {
+        new CellDao(null);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -97,4 +104,29 @@ public class CellDaoTest {
         new CellDao(ds).update(null, new String[]{"value", "1"});
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void testUpdateFailureIllegalParam() {
+        new CellDao(ds).update(cell, new String[]{"illegal_param", "1"});
+    }
+
+    @Ignore("Skip till figure out a way to mock dao update() expectations (probably need to refactor the logic")
+    @Test
+    public void testUpdateValueSuccess() throws Exception {
+        daoMock.update(cell, new String[]{CELL_VALUE_FIELD, "1"});
+        // verify(daoMock, times(1)).updateOrRemoveByQuery(any(String.class));
+    }
+
+    @Ignore("Skip till figure out a way to mock dao update() expectations (probably need to refactor the logic")
+    @Test
+    public void testUpdateRowIndexSuccess() throws Exception {
+        daoMock.update(cell, new String[]{ROW_INDEX_FIELD, "title"});
+        // verify(daoMock, times(1)).updateOrRemoveByQuery(any(String.class));
+    }
+
+    @Ignore("Skip till figure out a way to mock dao update() expectations (probably need to refactor the logic")
+    @Test
+    public void testUpdateColumnIndexSuccess() throws Exception {
+        daoMock.update(cell, new String[]{COLUMN_INDEX_FIELD, "title"});
+        // verify(daoMock, times(1)).updateOrRemoveByQuery(any(String.class));
+    }
 }

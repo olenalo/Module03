@@ -2,28 +2,44 @@ package dao;
 
 import models.Location;
 import models.Sheet;
+import org.apache.commons.lang3.ArrayUtils;
 import utilities.DBCPDataSource;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static configs.MySQLConfigs.SHEETS_TABLE_NAME;
+import static configs.MySQLConfigs.*;
 
 public class SheetDao implements Dao<Sheet> {
-    // TODO use `PreparedStatement`
+    // TODO get rid of magic strings (we have fields names configured)
 
     private DBCPDataSource dataSource;
 
     public SheetDao(DBCPDataSource dataSource) {
+        if (dataSource == null) {
+            throw new IllegalArgumentException("Data source must not be null.");
+        }
         this.dataSource = dataSource;
     }
 
-    private Sheet fetchSheetBySqlQuery(String sql) {
-        Sheet sheet = null;
+    public void updateOrRemoveByQuery(String sql) {
         try (Connection connection = dataSource.getConnection()) {
             Statement statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery(sql);
+            statement.executeUpdate(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public Sheet get(long id) {
+        String sql = "select * from " + SHEETS_TABLE_NAME + " where sheet_id=?";
+        Sheet sheet = null;
+        try (Connection connection = dataSource.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setLong(1, id);
+            ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 sheet = new Sheet(
                         rs.getLong(1),
@@ -38,20 +54,13 @@ public class SheetDao implements Dao<Sheet> {
         return sheet;
     }
 
-    private void insertByQuery(String sql) {
-        try (Connection connection = dataSource.getConnection()) {
-            Statement statement = connection.createStatement();
-            statement.executeUpdate(sql);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private List<Sheet> fetchSheetsBySqlQuery(String sql) {
+    @Override
+    public List<Sheet> getAll() {
+        String sql = "select * from " + SHEETS_TABLE_NAME;
         List<Sheet> sheets = new ArrayList<>();
         try (Connection connection = dataSource.getConnection()) {
-            Statement statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery(sql);
+            PreparedStatement statement = connection.prepareStatement(sql);
+            ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 sheets.add(new Sheet(
                         rs.getLong(1),
@@ -63,25 +72,6 @@ public class SheetDao implements Dao<Sheet> {
             e.printStackTrace();
         }
         return sheets;
-    }
-
-    private void updateOrRemoveByQuery(String sql) {
-        try (Connection connection = dataSource.getConnection()) {
-            Statement statement = connection.createStatement();
-            statement.executeUpdate(sql);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public Sheet get(long id) {
-        return fetchSheetBySqlQuery("select * from " + SHEETS_TABLE_NAME + " where sheet_id=" + id);
-    }
-
-    @Override
-    public List<Sheet> getAll() {
-        return fetchSheetsBySqlQuery("select * from " + SHEETS_TABLE_NAME);
     }
 
     public boolean locationExists(Location location, long sheetId) {
@@ -102,24 +92,54 @@ public class SheetDao implements Dao<Sheet> {
         if (sheet == null) {
             throw new IllegalArgumentException("Please provide a Sheet object.");
         }
-        String params = sheet.getId() + ", '" +
-                sheet.getTitle() + "', " +
-                sheet.getRowsNumber() + ", " +
-                sheet.getColumnsNumber();
-        insertByQuery("insert into " + SHEETS_TABLE_NAME + " values (" + params + ")");
+        String sql = "insert into " + SHEETS_TABLE_NAME + " values (?, ?, ?, ?)";
+        try (Connection connection = dataSource.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setLong(1, sheet.getId());
+            statement.setString(2, sheet.getTitle());
+            statement.setLong(3, sheet.getRowsNumber());
+            statement.setLong(4, sheet.getColumnsNumber());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private String prepareUpdateQuery(String[] params) {
+        String sql = null;
+        if (params[0].equals(ROWS_NUMBER_FIELD) || params[0].equals(COLUMNS_NUMBER_FIELD)) {
+            String sign;
+            if (params[1].contains("-")) {
+                sign = "";
+            } else {
+                sign = " + ";
+            }
+            sql = "update " + SHEETS_TABLE_NAME +
+                    " set " + params[0] + " = " + params[0] + sign + params[1];
+
+        } else if (params[0].equals(TITLE_FIELD)) {
+            sql = "update " + SHEETS_TABLE_NAME +
+                    " set " + params[0] + " = '" + params[1] + "'";
+        }
+        return sql;
     }
 
     @Override
     public void update(Sheet sheet, String[] params) {
+        // TODO update multiple values
         if (sheet == null) {
             throw new IllegalArgumentException("Please provide a Sheet object.");
         }
-        // TODO add params checks (naming, values)
-        // TODO add additional logic to checks (e.g. if `rows_number` and positive value, increment, and decrement with negative value)
-        // TODO format string with placeholders (here and in other places)
-        updateOrRemoveByQuery("update " + SHEETS_TABLE_NAME +
-                " set " + params[0] + " = " + params[0] + " + " + params[1] +
-                " where sheet_id = " + sheet.getId());
+        if (!ArrayUtils.contains(SHEETS_ALLOWED_MODIFIABLE_FIELDS, params[0])) {
+            throw new IllegalArgumentException("Please provide a valid sheets table field name as the first param.");
+        }
+        String sql = prepareUpdateQuery(params);
+        if (sql == null) {
+            throw new IllegalArgumentException("Please provide valid params for the update query to be prepared.");
+        } else {
+            sql += " where sheet_id = " + sheet.getId();
+            updateOrRemoveByQuery(sql);
+        }
     }
 
     @Override

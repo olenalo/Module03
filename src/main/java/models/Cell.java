@@ -12,6 +12,11 @@ public class Cell {
         this.sheetId = sheetId;
     }
 
+    public Cell(Location location, long sheetId) {
+        this.location = location;
+        this.sheetId = sheetId;
+    }
+
     public Cell(Location location, String value, long sheetId) {
         this.location = location;
         this.value = value;

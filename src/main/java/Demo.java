@@ -1,6 +1,8 @@
 import app.SpreadsheetApp;
+import models.Cell;
 import models.Location;
 
+import static configs.MySQLConfigs.*;
 import static utilities.PrintUtils.printCells;
 import static utilities.PrintUtils.printSheets;
 
@@ -18,15 +20,16 @@ public class Demo {
 
         app.addRow(1);
         app.addRow(1);
-        // app.removeRow(1); // FIXME
-        // app.removeRows(1, 2); // FIXME
+        app.removeRow(1);
+        app.removeRows(1, 2);
         app.addColumn(1);
         app.addColumn(1);
-        // app.removeColumn(1); // FIXME
+        app.removeColumn(1);
+        app.renameSheet(1, "MyFirstSheet");
 
         app.addRows(2, 10);
         app.addColumns(2, 10);
-        // app.removeColumns(2, 2); // FIXME
+        app.removeColumns(2, 2);
 
         System.out.println("----------- Print the 1st sheet -----------");
         System.out.println(app.getSheet(1));
@@ -79,6 +82,35 @@ public class Demo {
         System.out.println("----------- Print all data -----------");
         printCells(app.getAllData());
 
+        app.updateData(new Cell(new Location(1, 1), 2),
+                new String[]{CELL_VALUE_FIELD, "New Value"});
+        app.updateData(new Cell(new Location(0, 0), 2),
+                new String[]{ROW_INDEX_FIELD, "1"});
+        // Check we get integrity error (loc already exist)
+        /*
+        app.updateData(new Cell(new Location(0, 0), 1),
+                new String[]{COLUMN_INDEX_FIELD, "1"});
+        app.updateData(new Cell(new Location(1, 0), 2),
+                new String[]{COLUMN_INDEX_FIELD, "1"});
+        */
+        // Nothing happens below: no such value exists
+        app.updateData(new Cell(new Location(0, 0), 2),
+                new String[]{COLUMN_INDEX_FIELD, "1"});
+        System.out.println("----------- Print all data again (after the change) -----------");
+        printCells(app.getAllData());
+
+        // Check failure if updating at non-existing location
+        /*
+        app.updateData(new Cell(new Location(23, 123), 2),
+                new String[]{CELL_VALUE_FIELD, "New Value"});
+        */
+
+        // Check failure if updating at non-existing sheet
+        /*
+        app.updateData(new Cell(new Location(1, 1), 2222),
+                new String[]{CELL_VALUE_FIELD, "New Value"});
+        */
+
         System.out.println("----------- Print all data of the 1st sheet sheet -----------");
         printCells(app.getAllDataCellsOfSheet(1));
 
@@ -91,7 +123,7 @@ public class Demo {
 
         app.removeData(1);
         System.out.println("----------- Print all data again (after removal) -----------");
-        printCells(app.getAllData());
+        printCells(app.getAllData());  // Ensure it's empty
 
         System.out.println("----------- -----------");
     }
