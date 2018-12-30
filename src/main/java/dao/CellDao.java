@@ -72,7 +72,7 @@ public class CellDao implements Dao<Cell> {
         }
     }
 
-    private void updateOrRemoveByQuery(String sql) {
+    public void updateOrRemoveByQuery(String sql) {
         try (Connection connection = dataSource.getConnection()) {
             Statement statement = connection.createStatement();
             statement.executeUpdate(sql);

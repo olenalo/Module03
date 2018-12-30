@@ -71,7 +71,7 @@ public class SheetDao implements Dao<Sheet> {
         return sheets;
     }
 
-    private void updateOrRemoveByQuery(String sql) {
+    public void updateOrRemoveByQuery(String sql) {
         try (Connection connection = dataSource.getConnection()) {
             Statement statement = connection.createStatement();
             statement.executeUpdate(sql);
