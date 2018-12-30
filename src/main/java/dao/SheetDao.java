@@ -12,6 +12,7 @@ import static configs.MySQLConfigs.SHEETS_TABLE_NAME;
 
 public class SheetDao implements Dao<Sheet> {
     // TODO use `PreparedStatement`
+    // TODO format sql string with placeholders
 
     private DBCPDataSource dataSource;
 
@@ -117,12 +118,19 @@ public class SheetDao implements Dao<Sheet> {
         if (sheet == null) {
             throw new IllegalArgumentException("Please provide a Sheet object.");
         }
-        // TODO add params checks (naming, values)
-        // TODO add additional logic to checks (e.g. if `rows_number` and positive value, increment, and decrement with negative value)
-        // TODO format string with placeholders (here and in other places)
-        updateOrRemoveByQuery("update " + SHEETS_TABLE_NAME +
-                " set " + params[0] + " = " + params[0] + " + " + params[1] +
-                " where sheet_id = " + sheet.getId());
+        // TODO add params checks (allowed naming, values)
+        // TODO add additional logic to checks, e.g.
+        //  - if `title`, rename a sheet.
+        String sign;
+        if (params[1].contains("-")) {
+            sign = "";
+        } else {
+            sign = " + ";
+        }
+        String sql = "update " + SHEETS_TABLE_NAME +
+                " set " + params[0] + " = " + params[0] + sign + params[1] +
+                " where sheet_id = " + sheet.getId();
+        updateOrRemoveByQuery(sql);
     }
 
     @Override

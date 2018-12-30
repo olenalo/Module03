@@ -63,8 +63,7 @@ public class SpreadsheetApp {
     }
 
     public void removeRow(long sheetId) {
-        // FIXME
-        sheetDao.update(new Sheet(sheetId), new String[]{"columns_number", "-1"});
+        sheetDao.update(new Sheet(sheetId), new String[]{"rows_number", "-1"});
     }
 
     public void removeRow(long sheetId, long rowNumber) {
@@ -73,8 +72,7 @@ public class SpreadsheetApp {
     }
 
     public void removeRows(long sheetId, long rowsNumber) {
-        // FIXME
-        sheetDao.update(new Sheet(sheetId), new String[]{"columns_number", String.valueOf(-rowsNumber)});
+        sheetDao.update(new Sheet(sheetId), new String[]{"rows_number", String.valueOf(-rowsNumber)});
     }
 
     public void removeRows(long sheetId, int rowIndex, long rowNumber) {
@@ -83,7 +81,6 @@ public class SpreadsheetApp {
     }
 
     public void removeColumn(long sheetId) {
-        // FIXME
         sheetDao.update(new Sheet(sheetId), new String[]{"columns_number", "-1"});
     }
 
@@ -93,7 +90,7 @@ public class SpreadsheetApp {
     }
 
     public void removeColumns(long sheetId, long columnsNumber) {
-        sheetDao.update(new Sheet(sheetId), new String[]{"columns_number", String.valueOf(columnsNumber)});
+        sheetDao.update(new Sheet(sheetId), new String[]{"columns_number", String.valueOf(-columnsNumber)});
     }
 
     public void removeColumns(long sheetId, long columnIndex, long columnNumber) {

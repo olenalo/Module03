@@ -18,15 +18,15 @@ public class Demo {
 
         app.addRow(1);
         app.addRow(1);
-        // app.removeRow(1); // FIXME
-        // app.removeRows(1, 2); // FIXME
+        app.removeRow(1);
+        app.removeRows(1, 2);
         app.addColumn(1);
         app.addColumn(1);
-        // app.removeColumn(1); // FIXME
+        app.removeColumn(1);
 
         app.addRows(2, 10);
         app.addColumns(2, 10);
-        // app.removeColumns(2, 2); // FIXME
+        app.removeColumns(2, 2);
 
         System.out.println("----------- Print the 1st sheet -----------");
         System.out.println(app.getSheet(1));

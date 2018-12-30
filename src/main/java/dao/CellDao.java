@@ -12,6 +12,7 @@ import static configs.MySQLConfigs.DATA_CELLS_TABLE_NAME;
 
 public class CellDao implements Dao<Cell> {
     // TODO use `PreparedStatement`
+    // TODO format sql string with placeholders
 
     private DBCPDataSource dataSource;
 
@@ -122,6 +123,7 @@ public class CellDao implements Dao<Cell> {
         if (cell == null) {
             throw new IllegalArgumentException("Please provide a Cell object.");
         }
+        // TODO implement
         throw new UnsupportedOperationException("This method isn't implemented yet");
     }
 

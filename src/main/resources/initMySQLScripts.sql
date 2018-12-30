@@ -2,7 +2,7 @@
 
 
 # Normally this should correspond to a particular spreadsheet's file name / id or so
-# This exact part is implemented within the module.\
+# This exact part is implemented within the module.
 create database myspreadsheet;
 
 create table myspreadsheet.sheets (
@@ -14,12 +14,10 @@ create table myspreadsheet.sheets (
 );
 
 create table myspreadsheet.cells (
-    # cell_id int(11) not null auto_increment,  
     row_index int(11) not null,
     column_index int(11) not null,
     cell_value varchar(20),
     sheet_id int(11) not null,
-    # primary key (cell_id),
     foreign key (sheet_id) references myspreadsheet.sheets(sheet_id),
     unique key sheet_id (sheet_id, row_index, column_index)
 );
@@ -36,8 +34,10 @@ select * from myspreadsheet.cells where sheet_id=2;
 
 # select * from myspreadsheet.cells where sheet_id=1 and cell_id=1;
 select * from myspreadsheet.cells where sheet_id=1 and row_index=0 and column_index=0;
-*/
 
+update myspreadsheet.sheets set columns_number = columns_number - 1 where sheet_id = 1;
+select * from myspreadsheet.sheets;
+*/
 
 
 
