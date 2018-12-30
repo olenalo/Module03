@@ -125,6 +125,7 @@ public class CellDao implements Dao<Cell> {
 
     @Override
     public void update(Cell cell, String[] params) {
+        // TODO update multiple values
         if (cell == null) {
             throw new IllegalArgumentException("Please provide a Cell object.");
         }

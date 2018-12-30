@@ -2,7 +2,7 @@ import app.SpreadsheetApp;
 import models.Cell;
 import models.Location;
 
-import static configs.MySQLConfigs.CELL_VALUE_FIELD;
+import static configs.MySQLConfigs.*;
 import static utilities.PrintUtils.printCells;
 import static utilities.PrintUtils.printSheets;
 
@@ -79,12 +79,23 @@ public class Demo {
         );
         */
 
-
         System.out.println("----------- Print all data -----------");
         printCells(app.getAllData());
 
         app.updateData(new Cell(new Location(1, 1), 2),
                 new String[]{CELL_VALUE_FIELD, "New Value"});
+        app.updateData(new Cell(new Location(0, 0), 2),
+                new String[]{ROW_INDEX_FIELD, "1"});
+        // Check we get integrity error (loc already exist)
+        /*
+        app.updateData(new Cell(new Location(0, 0), 1),
+                new String[]{COLUMN_INDEX_FIELD, "1"});
+        app.updateData(new Cell(new Location(1, 0), 2),
+                new String[]{COLUMN_INDEX_FIELD, "1"});
+        */
+        // Nothing happens below: no such value exists
+        app.updateData(new Cell(new Location(0, 0), 2),
+                new String[]{COLUMN_INDEX_FIELD, "1"});
         System.out.println("----------- Print all data again (after the change) -----------");
         printCells(app.getAllData());
 
