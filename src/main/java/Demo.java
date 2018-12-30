@@ -92,7 +92,7 @@ public class Demo {
 
         app.removeData(1);
         System.out.println("----------- Print all data again (after removal) -----------");
-        printCells(app.getAllData());
+        printCells(app.getAllData());  // Ensure it's empty
 
         System.out.println("----------- -----------");
     }

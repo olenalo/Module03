@@ -7,7 +7,6 @@ import utilities.DBCPDataSource;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static configs.MySQLConfigs.*;
@@ -15,6 +14,7 @@ import static configs.MySQLConfigs.*;
 public class SheetDao implements Dao<Sheet> {
     // TODO use `PreparedStatement`
     // TODO consider formatting sql queries strings with placeholders
+    // TODO get rid of magic strings (we have fields names configured)
 
     private DBCPDataSource dataSource;
 
@@ -142,10 +142,13 @@ public class SheetDao implements Dao<Sheet> {
         if (!ArrayUtils.contains(SHEETS_ALLOWED_MODIFIABLE_FIELDS, params[0])) {
             throw new IllegalArgumentException("Please provide a valid sheets table field name as the first param.");
         }
-        String sql = prepareUpdateQuery(params) + " where sheet_id = " + sheet.getId();
-        if (sql != null) {
+        String sql = prepareUpdateQuery(params);
+        if (sql == null) {
+            throw new IllegalArgumentException("Please provide valid params for the update query to be prepared.");
+        } else {
+            sql += " where sheet_id = " + sheet.getId();
             updateOrRemoveByQuery(sql);
-        }  // TODO consider: should we raise an exception if null?
+        }
     }
 
     @Override

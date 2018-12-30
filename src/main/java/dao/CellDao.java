@@ -13,6 +13,7 @@ import static configs.MySQLConfigs.DATA_CELLS_TABLE_NAME;
 public class CellDao implements Dao<Cell> {
     // TODO use `PreparedStatement`
     // TODO consider formatting sql queries strings with placeholders
+    // TODO get rid of magic strings (we have fields names configured)
 
     private DBCPDataSource dataSource;
 

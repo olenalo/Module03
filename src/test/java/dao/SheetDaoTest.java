@@ -12,10 +12,12 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
+import static configs.MySQLConfigs.COLUMNS_NUMBER_FIELD;
+import static configs.MySQLConfigs.ROWS_NUMBER_FIELD;
+import static configs.MySQLConfigs.TITLE_FIELD;
 import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 /**
  * Ensure <code>SheetDao</code> objects are created properly.
@@ -104,7 +106,35 @@ public class SheetDaoTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testUpdateFailureIfNoSheetProvided() {
-        new SheetDao(ds).update(null, new String[]{"rows_number", "1"});
+        new SheetDao(ds).update(null, new String[]{ROWS_NUMBER_FIELD, "1"});
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testUpdateFailureIfNoSqlProvided() {
+        new SheetDao(ds).update(null, new String[]{ROWS_NUMBER_FIELD, "1"});
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testUpdateFailureIfUndefinedParamProvided() {
+        new SheetDao(ds).update(sheet, new String[]{"undefined_param", "1"});
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testUpdateRowsNumberSuccess() throws Exception {
+        new SheetDao(ds).update(null, new String[]{ROWS_NUMBER_FIELD, "1"});
+        verify(statement, times(1)).executeQuery(any(String.class));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testUpdateColumnsNumberSuccess() throws Exception {
+        new SheetDao(ds).update(null, new String[]{COLUMNS_NUMBER_FIELD, "1"});
+        verify(statement, times(1)).executeQuery(any(String.class));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testUpdateTitleSuccess() throws Exception {
+        new SheetDao(ds).update(null, new String[]{TITLE_FIELD, "title"});
+        verify(statement, times(1)).executeQuery(any(String.class));
     }
 
 }
