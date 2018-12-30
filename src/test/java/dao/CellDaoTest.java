@@ -11,8 +11,8 @@ import org.mockito.runners.MockitoJUnitRunner;
 import utilities.DBCPDataSource;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
 
 import static configs.MySQLConfigs.*;
 import static org.mockito.Matchers.any;
@@ -35,7 +35,7 @@ public class CellDaoTest {
     @Mock
     private DBCPDataSource ds;
     @Mock
-    private Statement statement;
+    private PreparedStatement statement;
     @Mock
     private ResultSet resultSet;
 
@@ -54,13 +54,12 @@ public class CellDaoTest {
         when(resultSet.getString(3)).thenReturn("test value");
         when(resultSet.getLong(4)).thenReturn((long) 0);
 
-        statement = mock(Statement.class);
-        when(statement.executeQuery(any(String.class)))
-                .thenReturn(resultSet);
-
         ds = mock(DBCPDataSource.class);
         when(ds.getConnection()).thenReturn(connection);
-        when(connection.createStatement()).thenReturn(statement);
+
+        statement = mock(PreparedStatement.class);
+        when(connection.prepareStatement(any(String.class))).thenReturn(statement);
+        when(statement.executeQuery()).thenReturn(resultSet);
     }
 
     @Test(expected = IllegalArgumentException.class)
