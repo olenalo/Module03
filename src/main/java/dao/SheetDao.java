@@ -12,7 +12,6 @@ import java.util.List;
 import static configs.MySQLConfigs.*;
 
 public class SheetDao implements Dao<Sheet> {
-    // TODO use `PreparedStatement`
     // TODO get rid of magic strings (we have fields names configured)
 
     private DBCPDataSource dataSource;
@@ -24,11 +23,23 @@ public class SheetDao implements Dao<Sheet> {
         this.dataSource = dataSource;
     }
 
-    private Sheet fetchSheetBySqlQuery(String sql) {
-        Sheet sheet = null;
+    public void updateOrRemoveByQuery(String sql) {
         try (Connection connection = dataSource.getConnection()) {
             Statement statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery(sql);
+            statement.executeUpdate(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public Sheet get(long id) {
+        String sql = "select * from " + SHEETS_TABLE_NAME + " where sheet_id=?";
+        Sheet sheet = null;
+        try (Connection connection = dataSource.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setLong(1, id);
+            ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 sheet = new Sheet(
                         rs.getLong(1),
@@ -43,20 +54,13 @@ public class SheetDao implements Dao<Sheet> {
         return sheet;
     }
 
-    private void insertByQuery(String sql) {
-        try (Connection connection = dataSource.getConnection()) {
-            Statement statement = connection.createStatement();
-            statement.executeUpdate(sql);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private List<Sheet> fetchSheetsBySqlQuery(String sql) {
+    @Override
+    public List<Sheet> getAll() {
+        String sql = "select * from " + SHEETS_TABLE_NAME;
         List<Sheet> sheets = new ArrayList<>();
         try (Connection connection = dataSource.getConnection()) {
-            Statement statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery(sql);
+            PreparedStatement statement = connection.prepareStatement(sql);
+            ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 sheets.add(new Sheet(
                         rs.getLong(1),
@@ -68,25 +72,6 @@ public class SheetDao implements Dao<Sheet> {
             e.printStackTrace();
         }
         return sheets;
-    }
-
-    public void updateOrRemoveByQuery(String sql) {
-        try (Connection connection = dataSource.getConnection()) {
-            Statement statement = connection.createStatement();
-            statement.executeUpdate(sql);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public Sheet get(long id) {
-        return fetchSheetBySqlQuery("select * from " + SHEETS_TABLE_NAME + " where sheet_id=" + id);
-    }
-
-    @Override
-    public List<Sheet> getAll() {
-        return fetchSheetsBySqlQuery("select * from " + SHEETS_TABLE_NAME);
     }
 
     public boolean locationExists(Location location, long sheetId) {
@@ -107,11 +92,17 @@ public class SheetDao implements Dao<Sheet> {
         if (sheet == null) {
             throw new IllegalArgumentException("Please provide a Sheet object.");
         }
-        String params = sheet.getId() + ", '" +
-                sheet.getTitle() + "', " +
-                sheet.getRowsNumber() + ", " +
-                sheet.getColumnsNumber();
-        insertByQuery("insert into " + SHEETS_TABLE_NAME + " values (" + params + ")");
+        String sql = "insert into " + SHEETS_TABLE_NAME + " values (?, ?, ?, ?)";
+        try (Connection connection = dataSource.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setLong(1, sheet.getId());
+            statement.setString(2, sheet.getTitle());
+            statement.setLong(3, sheet.getRowsNumber());
+            statement.setLong(4, sheet.getColumnsNumber());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     private String prepareUpdateQuery(String[] params) {

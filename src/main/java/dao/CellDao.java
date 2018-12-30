@@ -128,7 +128,7 @@ public class CellDao implements Dao<Cell> {
         // Note: Incrementing and decrementing could be possible
         //  once values of different types can be provided
         String sql = "update " + CELLS_TABLE_NAME +
-                " set " + params[0] + "=\"" +  params[1] + "\"" +
+                " set " + params[0] + "=\"" + params[1] + "\"" +
                 " where sheet_id = ?" +
                 " and row_index = ?" +
                 " and column_index = ?";

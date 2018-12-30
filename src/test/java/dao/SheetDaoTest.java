@@ -10,8 +10,8 @@ import org.mockito.runners.MockitoJUnitRunner;
 import utilities.DBCPDataSource;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
 
 import static configs.MySQLConfigs.COLUMNS_NUMBER_FIELD;
 import static configs.MySQLConfigs.ROWS_NUMBER_FIELD;
@@ -36,7 +36,7 @@ public class SheetDaoTest {
     @Mock
     private DBCPDataSource ds;
     @Mock
-    private Statement statement;
+    private PreparedStatement statement;
     @Mock
     private ResultSet resultSet;
 
@@ -55,13 +55,12 @@ public class SheetDaoTest {
         when(resultSet.getLong(3)).thenReturn((long) 2);
         when(resultSet.getLong(4)).thenReturn((long) 2);
 
-        statement = mock(Statement.class);
-        when(statement.executeQuery(any(String.class)))
-                .thenReturn(resultSet);
-
         ds = mock(DBCPDataSource.class);
         when(ds.getConnection()).thenReturn(connection);
-        when(connection.createStatement()).thenReturn(statement);
+
+        statement = mock(PreparedStatement.class);
+        when(connection.prepareStatement(any(String.class))).thenReturn(statement);
+        when(statement.executeQuery()).thenReturn(resultSet);
     }
 
     @Test(expected = IllegalArgumentException.class)
