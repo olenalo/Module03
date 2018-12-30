@@ -13,7 +13,6 @@ import static configs.MySQLConfigs.*;
 
 public class SheetDao implements Dao<Sheet> {
     // TODO use `PreparedStatement`
-    // TODO consider formatting sql queries strings with placeholders
     // TODO get rid of magic strings (we have fields names configured)
 
     private DBCPDataSource dataSource;
